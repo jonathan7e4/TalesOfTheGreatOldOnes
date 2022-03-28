@@ -6,60 +6,65 @@ public class Teleport : MonoBehaviour
 {
     public Transform playerTransform;
     Transform iaTransform;
-    public float verticalOffset;
-    public float horizontalOffset;
+    Rigidbody2D rb;
+    public float offset;
     public static Teleport instance;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+        Debug.Log(instance == null);
         iaTransform = GetComponent<Transform>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T)) {
+            TeleportToPLayer();
+        }
     }
 
     public void TeleportToPLayer()
     {
+        rb.velocity = Vector3.zero;
+
         Vector3 playerPosition = playerTransform.position;
         Vector3 target;
-        bool cast;
 
+        bool cast;
+        int i=0;
         do
         {
-            var x = 0f;
-            var y = 0f;
+            var x = playerPosition.x;
+            var y = playerPosition.y;
 
-            var dice = Random.Range(1, 5);
-            Debug.Log(dice);
+            var dice = Random.Range(0, 4);
             switch (dice)
             {
+                case 0:
+                    x += offset;
+                    break;
+
                 case 1:
-                    x = playerPosition.x + horizontalOffset;
+                    x -= offset;
                     break;
 
                 case 2:
-                    x = playerPosition.x - horizontalOffset;
+                    y += offset;
                     break;
 
                 case 3:
-                    y = playerPosition.y + verticalOffset;
-                    break;
-
-                case 4:
-                    y = playerPosition.y - verticalOffset;
+                    y -= offset;
                     break;
             }
-                                        //default z
-            target = new Vector3(x, y, 1);
-
-            cast = Physics2D.CircleCast(target, GetComponent<CircleCollider2D>().radius, Vector2.right, LayerMask.GetMask("Obstacle"));
             
+            target = new Vector3(x, y, playerPosition.z);
 
-        } while (cast);
+            cast = Physics2D.OverlapCircle(target, GetComponent<CircleCollider2D>().radius, LayerMask.GetMask("Obstacle"));
+
+        } while (cast && i++<10);
 
         iaTransform.position = target;
     }
