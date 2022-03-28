@@ -45,6 +45,8 @@ public class AIController : MonoBehaviour
 
         seeker = GetComponent<Pathfinding.Seeker>();
 
+        Teleport.instance.TeleportToPLayer();
+
     }
 
     Vector2 GetPositionToApproachPlayer()
@@ -290,14 +292,13 @@ public class AIController : MonoBehaviour
         // UPDATE LOGIC VARIABLES
         m_distanceToPlayer = playerTransform.position - transform.position;
 
-
         // UPDATE LOGIC
         if(m_distanceToPlayer.magnitude < maxDistToPlayer && m_distanceToPlayer.magnitude > minDistToPlayer){
 
-            ShootLogicUpdate();
+            //ShootLogicUpdate();
         }
         else {
-            FollowPlayerLogicUpdate();
+           //FollowPlayerLogicUpdate();
         }
 
     }
