@@ -19,7 +19,6 @@ public class Flanqueo : MonoBehaviour
     public GameObject projectile;
     public Vector2 m_distanceToPlayer;
     // PRIVATE ATTRIBUTES
-    const float MAX_DIST_TO_LAST_NODE = 5f;
     bool lookingAPath = false;
     bool followingPath;
     float timeFollowingPathCount;
@@ -48,19 +47,9 @@ public class Flanqueo : MonoBehaviour
     }
 
 
-<<<<<<< HEAD:Assets/Scripts/Behaviours/Flanqueo.cs
     public bool AroundPlayer()
     {
         return NotTooFarAway() && NotTooClose();
-=======
-        Teleport.instance.TeleportToPLayer();
-
-<<<<<<< HEAD:Assets/Scripts/Behaviours/Flanqueo.cs
->>>>>>> origin/develop:Assets/AIController.cs
-=======
-        Teleport.instance.TeleportToPLayer();
-
->>>>>>> origin/develop:Assets/AIController.cs
     }
 
 
@@ -79,12 +68,10 @@ public class Flanqueo : MonoBehaviour
 
         do
         {
-            target = -m_distanceToPlayer.normalized * (minDistToPlayer + offset) + (Vector2)playerTransform.position;
+            target = -m_distanceToPlayer.normalized * (minDistToPlayer + offset) + (Vector2) playerTransform.position;
             target2 = target;
-            playerToTarget = target - (Vector2)playerTransform.position;
+            playerToTarget = target - (Vector2) playerTransform.position;
             playerToTarget2 = playerToTarget;
-
-            Debug.DrawLine(playerTransform.position, target);
 
             int it = 0;
 
@@ -94,8 +81,6 @@ public class Flanqueo : MonoBehaviour
                 cast2 = Physics2D.CircleCast(target2, GetComponent<CircleCollider2D>().radius, Vector2.right, LayerMask.GetMask("Obstacle"));
 
                 if (it++ > 180 / 15) break;
-                Debug.DrawLine(playerTransform.position, target);
-                Debug.DrawLine(playerTransform.position, target2);
 
                 playerToTarget = RotateVector2(playerToTarget, 15f);
                 target = (Vector2)playerTransform.position + playerToTarget;
@@ -107,15 +92,11 @@ public class Flanqueo : MonoBehaviour
             offset *= 1.1f;
 
         } while (cast1 && cast2 && offset < maxOffset);
+        
+        if (cast1 && !cast2) return target2;
 
+        if (!cast1 && cast2) return target;
 
-        if (cast1 && !cast2)
-            return target2;
-
-        if (!cast1 && cast2)
-            return target;
-
-        // return closest
         return Vector2.Distance(transform.position, target) < Vector2.Distance(transform.position, target2) ? target : target2;
     }
 
@@ -144,13 +125,11 @@ public class Flanqueo : MonoBehaviour
 
         do
         {
-            target = -m_distanceToPlayer.normalized * (minDistToPlayer + offset) + (Vector2)playerTransform.position;
+            target = -m_distanceToPlayer.normalized * (minDistToPlayer + offset) + (Vector2) playerTransform.position;
             target2 = target;
 
-            aiToTarget = target - (Vector2)transform.position;
+            aiToTarget = target - (Vector2) transform.position;
             aiToTarget2 = aiToTarget;
-
-            Debug.DrawLine(transform.position, target);
 
             int it = 0;
 
@@ -161,17 +140,13 @@ public class Flanqueo : MonoBehaviour
                 cast2 = Physics2D.CircleCast(target2, GetComponent<CircleCollider2D>().radius, Vector2.right, LayerMask.GetMask("Obstacle"));
 
                 if (it++ > 180 / 15) break;
-                Debug.DrawLine(transform.position, target);
-                Debug.DrawLine(transform.position, target2);
 
                 aiToTarget = RotateVector2(aiToTarget, 15f);
-                target = (Vector2)transform.position + aiToTarget;
+                target = (Vector2) transform.position + aiToTarget;
 
                 aiToTarget2 = RotateVector2(aiToTarget2, -15f);
-                target2 = (Vector2)transform.position + aiToTarget2;
+                target2 = (Vector2) transform.position + aiToTarget2;
             }
-
-            //este dentro del minimo, poner true
 
             var distanceTargetToPlayer = Vector2.Distance(playerTransform.position, target);
             var distanceTarget2ToPlayer = Vector2.Distance(playerTransform.position, target2);
@@ -186,12 +161,9 @@ public class Flanqueo : MonoBehaviour
 
         } while (cast1 && cast2 && offset < maxOffset);
 
+        if (cast1 && !cast2) return target2;
 
-        if (cast1 && !cast2)
-            return target2;
-
-        if (!cast1 && cast2)
-            return target;
+        if (!cast1 && cast2) return target;
 
         return Vector2.Distance(transform.position, target) < Vector2.Distance(transform.position, target2) ? target : target2;
     }
@@ -219,15 +191,9 @@ public class Flanqueo : MonoBehaviour
 
         Vector2 target;
 
-
-        if (followingPath && timeFollowingPathCount >= 3f && !PositionIsAroundPlayer(Vector2.Distance(lastPathNodePos, (Vector2)playerTransform.position)))
+        if (followingPath && timeFollowingPathCount >= 3f && !PositionIsAroundPlayer(Vector2.Distance(lastPathNodePos, (Vector2) playerTransform.position)))
         {
-
-            try
-            {
-                StopCoroutine(seekPathRoutine);
-            }
-            catch (System.NullReferenceException e) { }
+            try { StopCoroutine(seekPathRoutine); } catch ( System.NullReferenceException ) {}
 
             target = GetPositionToAvoidPlayer();
             StartPath(transform.position, target, OnPathFound);
@@ -236,37 +202,12 @@ public class Flanqueo : MonoBehaviour
         {
             target = GetPositionToAvoidPlayer();
             StartPath(transform.position, target, OnPathFound);
-
         }
         else if (!lookingAPath && !followingPath)
         {
-            // TODO: NO SEGUIR AL PLAYER, SEGUIR A UN PUNTO DENTRO DE LA ZONA DONDE ME QUIERO MANTENER
             target = GetPositionToApproachPlayer();
-
-            ////debug.log("FollowPlayerLogicUpdate()\t-\tMESSAGE: lookingAPath = " + lookingAPath);
-
             StartPath(transform.position, target, OnPathFound);
-
-<<<<<<< HEAD:Assets/Scripts/Behaviours/Flanqueo.cs
         }
-=======
-    // Update is called once per frame
-    void Update()
-    {
-
-        // UPDATE LOGIC VARIABLES
-        m_distanceToPlayer = playerTransform.position - transform.position;
-
-        // UPDATE LOGIC
-        if(m_distanceToPlayer.magnitude < maxDistToPlayer && m_distanceToPlayer.magnitude > minDistToPlayer){
-
-            //ShootLogicUpdate();
-        }
-        else {
-           //FollowPlayerLogicUpdate();
-        }
-
->>>>>>> origin/develop:Assets/AIController.cs
     }
 
 
@@ -284,12 +225,6 @@ public class Flanqueo : MonoBehaviour
     {
         followingPath = false;
         rb.velocity = Vector2.zero;
-    }
-
-
-    bool CurrentPathIsNotValid(Vector2 destination, Vector2 lastNode, float distance = MAX_DIST_TO_LAST_NODE)
-    {
-        return Vector2.Distance(destination, lastNode) > distance;
     }
 
 
@@ -325,7 +260,6 @@ public class Flanqueo : MonoBehaviour
         foreach (var node in path)
         {
             Vector2 current = new Vector2(node.x, node.y);
-
             Debug.DrawLine(lastPos, current, Color.green, 1f);
             lastPos = current;
         }
@@ -340,8 +274,6 @@ public class Flanqueo : MonoBehaviour
         if (seekPathRoutine != null) StopSeekingPath();
 
         seekPathRoutine = StartCoroutine(FollowPath(p.vectorPath));
-
-        PrintPath(p.vectorPath);
     }
 
 
@@ -366,11 +298,8 @@ public class Flanqueo : MonoBehaviour
         Vector2 toPlayer = (playerTransform.position - rb.transform.position).normalized;
         Vector2 perp = GetPerpendicular(toPlayer) * projectile.GetComponent<CircleCollider2D>().radius;
 
-        bool firstCast = !Physics2D.Linecast((Vector2)rb.transform.position + perp, (Vector2)playerTransform.position + perp, LayerMask.GetMask("Obstacle"));
-        bool secondCast = !Physics2D.Linecast((Vector2)rb.transform.position - perp, (Vector2)playerTransform.position - perp, LayerMask.GetMask("Obstacle"));
-
-        //Debug.DrawLine((Vector2)rb.transform.position + perp, (Vector2)playerTransform.position + perp);   
-        //Debug.DrawLine((Vector2)rb.transform.position - perp, (Vector2)playerTransform.position - perp);   
+        bool firstCast = !Physics2D.Linecast((Vector2) rb.transform.position + perp, (Vector2) playerTransform.position + perp, LayerMask.GetMask("Obstacle"));
+        bool secondCast = !Physics2D.Linecast((Vector2) rb.transform.position - perp, (Vector2) playerTransform.position - perp, LayerMask.GetMask("Obstacle"));
 
         return firstCast && secondCast;
     }
@@ -382,25 +311,23 @@ public class Flanqueo : MonoBehaviour
 
         if (CanShotToPlayer())
         {
-
             if (shootReloadTime <= 0)
             {
                 var toPlayer = m_distanceToPlayer.normalized;
 
+                var proj = Instantiate(projectile, (Vector2) transform.position + toPlayer * 1f, Quaternion.identity);
 
-                var proj = Instantiate(projectile, (Vector2)transform.position + toPlayer * 1f, Quaternion.identity);
+                Vector3 playerPosition = playerTransform.position;
+                Vector2 playerVelocity = playerTransform.GetComponent<Rigidbody2D>().velocity;
+                Vector3 aiPosition = transform.position;
+                float projectileSpeed = projectile.GetComponent<ProyectileMovement>().speed;
 
-                var target = AIUtils.GetPlayerPredictiveTarget(
-                    playerTransform.position,
-                    playerTransform.GetComponent<Rigidbody2D>().velocity,
-                    transform.position,
-                    projectile.GetComponent<ProyectileMovement>().speed);
+                var target = AIUtils.GetPlayerPredictiveTarget( playerPosition, playerVelocity, aiPosition, projectileSpeed );
 
-                proj.GetComponent<Rigidbody2D>().velocity = (target - (Vector2)transform.position).normalized * proj.GetComponent<ProyectileMovement>().speed;
+                proj.GetComponent<Rigidbody2D>().velocity = (target - (Vector2) transform.position).normalized * proj.GetComponent<ProyectileMovement>().speed;
 
                 shootReloadTime = 3f;
             }
-
         }
         else if (!lookingAPath && !followingPath)
         {
