@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public static PlayerController instance;
+
     Rigidbody2D rigidBody2D;
     KeyboardStatus keyboardStatus = new KeyboardStatus();
     public Animator animator;
 
-    float speed = 4f;
+    public float speed = 4f;
     float currentSpeed = 0f;
     float acceleration = 200f;
 
@@ -113,6 +116,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        instance = this;
         rigidBody2D = GetComponent<Rigidbody2D>();
     }
 }

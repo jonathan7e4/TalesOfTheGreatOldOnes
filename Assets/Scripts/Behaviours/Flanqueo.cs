@@ -283,20 +283,12 @@ public class Flanqueo : MonoBehaviour
     }
 
 
-    Vector2 GetPerpendicular(Vector2 vector)
-    {
-        Vector2 result;
-        result.x = vector.y;
-        result.y = -vector.x;
-
-        return result;
-    }
-
+   
 
     bool CanShotToPlayer()
     {
         Vector2 toPlayer = (playerTransform.position - rb.transform.position).normalized;
-        Vector2 perp = GetPerpendicular(toPlayer) * projectile.GetComponent<CircleCollider2D>().radius;
+        Vector2 perp = AIUtils.GetPerpendicular(toPlayer) * projectile.GetComponent<CircleCollider2D>().radius;
 
         bool firstCast = !Physics2D.Linecast((Vector2) rb.transform.position + perp, (Vector2) playerTransform.position + perp, LayerMask.GetMask("Obstacle"));
         bool secondCast = !Physics2D.Linecast((Vector2) rb.transform.position - perp, (Vector2) playerTransform.position - perp, LayerMask.GetMask("Obstacle"));

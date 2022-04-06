@@ -12,4 +12,14 @@ public class AIUtils
 
         return targetPosition + (targetVelocity* time);
     }
+
+    public static Vector2 GetPerpendicular(Vector2 vector)
+    {
+        Vector2 result;
+        result.x = vector.y;
+        result.y = -vector.x;
+
+        return result;
+    }
+
 }

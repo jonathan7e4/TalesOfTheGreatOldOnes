@@ -14,7 +14,7 @@ public class CameraMovement : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space)) Shake.instance.ShakeIt();
+        //if (Input.GetKeyUp(KeyCode.Space)) Shake.instance.ShakeIt();
 
 
         float maxYDistToPlayer = 1.5f;
