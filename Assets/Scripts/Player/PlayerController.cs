@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     KeyboardStatus keyboardStatus = new KeyboardStatus();
     public Animator animator;
 
-    float speed = 4f;
+    public float speed = 4f;
     float currentSpeed = 0f;
     float acceleration = 200f;
 
