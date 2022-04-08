@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class AILifeSystem : MonoBehaviour
 {
-    public float hp = 20f;
+    public float maxHp = 20f;
+    public float hp;
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        hp = maxHp/2;
     }
 
     // Update is called once per frame
@@ -23,5 +25,12 @@ public class AILifeSystem : MonoBehaviour
     {
         Debug.Log("Me dieron");
         hp -= attackStrength;
+    }
+
+    public void getHealed() {
+        if (hp < maxHp) {
+            hp = Mathf.Min(hp += maxHp / 5, maxHp);
+            Debug.Log("Me curaron");
+        }
     }
 }
