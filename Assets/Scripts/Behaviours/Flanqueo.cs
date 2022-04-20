@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Flanqueo : MonoBehaviour
+public class Flanqueo : AIBehaviour
 {   // INITIALIZED ON Start()
     AstarPath pathController;
     Rigidbody2D rb;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZicZac : MonoBehaviour
+public class ZicZac : AIBehaviour
 {
 
     public int movCount;
@@ -30,6 +30,11 @@ public class ZicZac : MonoBehaviour
         }
 
         return true;
+    }
+
+    public override void UpdateBehaviour()
+    {
+        throw new System.NotImplementedException();
     }
 
     Vector2[] GetTargets()
@@ -105,11 +110,23 @@ public class ZicZac : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void FixedUpdateBehaviour()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && CanExecuteBehaviour()){
-            StartCoroutine(ZicZacAttack());
-        }    
+        throw new System.NotImplementedException();
+    }
+
+    public override void InitBehaviourData()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void StartBehaviour()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void StopBehaviour()
+    {
+        throw new System.NotImplementedException();
     }
 }
