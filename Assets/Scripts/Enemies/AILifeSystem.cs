@@ -9,8 +9,7 @@ public class AILifeSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        hp = maxHp/2;
+        
     }
 
     // Update is called once per frame
