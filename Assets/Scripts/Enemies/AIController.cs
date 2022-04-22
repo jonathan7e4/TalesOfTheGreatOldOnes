@@ -1,22 +1,27 @@
 using UnityEngine;
 
-[ RequireComponent( typeof(Flanqueo) ) ]
+//[ RequireComponent( typeof(Flanqueo) ) ]
 
 
 public class AIController : MonoBehaviour
 {
-    Flanqueo flanqueoBehaviour;
+    //Flanqueo flanqueoBehaviour;
+    Heal healBehaviour;
 
 
     void Start()
     {
-        flanqueoBehaviour = GetComponent<Flanqueo>();
+        //flanqueoBehaviour = GetComponent<Flanqueo>();
+        healBehaviour = GetComponent<Heal>();
+
+        healBehaviour.HealEnemies();
+
     }
 
 
     void Update()
     {
-        if ( flanqueoBehaviour.AroundPlayer() ) flanqueoBehaviour.ShootLogicUpdate();
-        else flanqueoBehaviour.FollowPlayerLogicUpdate();
+        //if ( flanqueoBehaviour.AroundPlayer() ) flanqueoBehaviour.ShootLogicUpdate();
+        //else flanqueoBehaviour.FollowPlayerLogicUpdate();        
     }
 }

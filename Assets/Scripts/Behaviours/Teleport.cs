@@ -14,7 +14,6 @@ public class Teleport : MonoBehaviour
     void Start()
     {
         instance = this;
-        Debug.Log(instance == null);
         iaTransform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
     }
