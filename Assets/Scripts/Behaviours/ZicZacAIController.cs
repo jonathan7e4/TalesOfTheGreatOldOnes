@@ -42,7 +42,7 @@ public class ZicZacAIController : MonoBehaviour
             case State.Attack:
                 ziczac.UpdateBehaviour();
 
-                if (/* debo pasar de atacar a flanquear*/)
+                if (true)
                 {
                     currentState = State.Flank;
                     ziczac.StopBehaviour();
@@ -54,7 +54,7 @@ public class ZicZacAIController : MonoBehaviour
             case State.Flank:
                 flank.UpdateBehaviour();
 
-                if (/* debo pasar de flanquear atacar */)
+                if (true)
                 {
                     currentState = State.Attack;
                     flank.StopBehaviour();
