@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ZicZac : AIBehaviour
 {
+    bool finished = false;
+
+    public bool Finished()
+    {
+        return finished;
+    }
 
     public int movCount;
     public float speed;
@@ -17,7 +24,7 @@ public class ZicZac : AIBehaviour
         {
             if (Physics2D.Linecast(originPos, target, LayerMask.GetMask("Obstacle")))
             {
-                Debug.DrawLine(originPos, target, Color.red, 100f);
+                //Debug.DrawLine(originPos, target, Color.red, 100f);
                 return false;
             }
 
@@ -25,16 +32,11 @@ public class ZicZac : AIBehaviour
         }
 
         if (Physics2D.Linecast(originPos, PlayerController.instance.transform.position, LayerMask.GetMask("Obstacle"))){
-            Debug.DrawLine(originPos, PlayerController.instance.transform.position, Color.red, 100f);
+            //Debug.DrawLine(originPos, PlayerController.instance.transform.position, Color.red, 100f);
             return false;
         }
 
         return true;
-    }
-
-    public override void UpdateBehaviour()
-    {
-        throw new System.NotImplementedException();
     }
 
     Vector2[] GetTargets()
@@ -70,7 +72,7 @@ public class ZicZac : AIBehaviour
         do
         {
             var meToTarget = targets[currentTargetIndex] - (Vector2)transform.position;
-            Debug.DrawLine(transform.position, (Vector2)transform.position + meToTarget);
+            //Debug.DrawLine(transform.position, (Vector2)transform.position + meToTarget);
             meToTarget.Normalize();
 
             GetComponent<Rigidbody2D>().velocity = meToTarget * speed;
@@ -98,7 +100,7 @@ public class ZicZac : AIBehaviour
             yield return null;
 
             var meToTarget = playerPos - (Vector2)transform.position;
-            Debug.DrawLine(transform.position, (Vector2)transform.position + meToTarget);
+            //Debug.DrawLine(transform.position, (Vector2)transform.position + meToTarget);
             meToTarget.Normalize();
 
             GetComponent<Rigidbody2D>().velocity = meToTarget * speed;
@@ -106,27 +108,32 @@ public class ZicZac : AIBehaviour
         }
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
+        finished = true;
 
     }
 
-    public override void FixedUpdateBehaviour()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public override void InitBehaviourData()
     {
-        throw new System.NotImplementedException();
+
     }
+
 
     public override void StartBehaviour()
     {
-        throw new System.NotImplementedException();
+        finished = false;
+        StartCoroutine( ZicZacAttack() );
     }
+
 
     public override void StopBehaviour()
     {
-        throw new System.NotImplementedException();
+        
+    }
+
+
+    public override void UpdateBehaviour()
+    {
+        
     }
 }
