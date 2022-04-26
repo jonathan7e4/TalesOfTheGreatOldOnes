@@ -13,9 +13,4 @@ abstract public class AIBehaviour : MonoBehaviour
     public abstract void StopBehaviour();
     
     public abstract void UpdateBehaviour();
-    public abstract void FixedUpdateBehaviour();
-
-
-
- 
 }

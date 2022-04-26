@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Flanqueo : AIBehaviour
-{   // INITIALIZED ON Start()
+public class Flank : AIBehaviour
+{   // INITIAL DATA
     AstarPath pathController;
     Rigidbody2D rb;
     Pathfinding.Seeker seeker;
@@ -23,16 +23,6 @@ public class Flanqueo : AIBehaviour
     bool followingPath;
     float timeFollowingPathCount;
     Vector2 lastPathNodePos;
-
-
-    void Start()
-    {
-        pathController = FindObjectOfType<AstarPath>();
-
-        rb = GetComponent<Rigidbody2D>();
-
-        seeker = GetComponent<Pathfinding.Seeker>();
-    }
 
 
     bool NotTooClose()
@@ -281,8 +271,6 @@ public class Flanqueo : AIBehaviour
     {
         return positionDistToPlayer < maxDistToPlayer && positionDistToPlayer > minDistToPlayer;
     }
-
-
    
 
     bool CanShotToPlayer()
@@ -329,8 +317,31 @@ public class Flanqueo : AIBehaviour
     }
 
 
-    private void Update()
+    public override void InitBehaviourData()
+    {
+        pathController = FindObjectOfType<AstarPath>();
+
+        rb = GetComponent<Rigidbody2D>();
+
+        seeker = GetComponent<Pathfinding.Seeker>();
+    }
+
+
+    public override void StartBehaviour()
+    {
+        FollowPlayerLogicUpdate();
+    }
+
+
+    public override void StopBehaviour()
+    {
+        FinishFollowingPath();
+    }
+
+
+    public override void UpdateBehaviour()
     {
         m_distanceToPlayer = playerTransform.position - transform.position;
+        if ( !AroundPlayer() ) FollowPlayerLogicUpdate();
     }
 }
