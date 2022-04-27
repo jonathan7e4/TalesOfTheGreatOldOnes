@@ -27,35 +27,49 @@ public class ArcherAIController : MonoBehaviour
     }
 
 
+    void Shoot()
+    {
+        shoot.ShootLogicUpdate();
+
+        if ( !PositionUtils.AroundPlayer( flank.distanceToPlayer, flank.maxDistToPlayer, flank.minDistToPlayer ) )
+        {
+            currentState = State.DoingFlank;
+
+            shoot.StopBehaviour();
+            flank.StartBehaviour();
+        }
+    }
+
+
+    void DoFlank()
+    {
+        flank.UpdateBehaviour();
+
+        if ( PositionUtils.AroundPlayer( flank.distanceToPlayer, flank.maxDistToPlayer, flank.minDistToPlayer ) )
+        {
+            currentState = State.Shooting;
+
+            flank.StopBehaviour();
+            shoot.StartBehaviour();
+        }
+    }
+
+
     void Update()
     {
+        flank.UpdateDistanceToPlayer();
+
         switch ( currentState )
         {
             case State.DoingFlank:
 
-                flank.UpdateBehaviour();
-
-                if ( flank.AroundPlayer() )
-                {
-                    currentState = State.Shooting;
-
-                    flank.StopBehaviour();
-                    shoot.StartBehaviour();
-                }
+                DoFlank();
 
                 break;
 
             case State.Shooting:
 
-                shoot.ShootLogicUpdate();
-
-                if ( true) // !flank.AroundPlayer()
-                {
-                    currentState = State.DoingFlank;
-
-                    shoot.StopBehaviour();
-                    flank.StartBehaviour();
-                }
+                Shoot();
 
                 break;
         }
