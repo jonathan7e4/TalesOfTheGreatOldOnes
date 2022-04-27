@@ -9,9 +9,10 @@ public class Shoot : AIBehaviour
     public float shootReloadTime;
     public float minDistToPlayer = 4f;
     public float maxDistToPlayer = 8f;
-    public Transform playerTransform;
     public GameObject projectile;
     public Vector2 m_distanceToPlayer;
+    // PRIVATE ATTRIBUTES
+    Transform playerTransform;
 
 
     bool CanShotToPlayer()
@@ -60,6 +61,8 @@ public class Shoot : AIBehaviour
 
     public override void InitBehaviourData()
     {
+        playerTransform = PlayerController.instance.GetComponent<Transform>();
+
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -79,6 +82,6 @@ public class Shoot : AIBehaviour
     public override void UpdateBehaviour()
     {
         m_distanceToPlayer = playerTransform.position - transform.position;
-        
+        ShootLogicUpdate();
     }
 }
