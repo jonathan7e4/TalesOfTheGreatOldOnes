@@ -133,12 +133,6 @@ public class Flank : AIBehaviour
     }
 
 
-    Vector2 GetPositionToShootPlayer() // REMEMBER TO DELETE THIS METHOD, since shoot.cs is created, isn't needed here !!!!!!!!!!!!!!!!!!!!!!!!!!
-    {
-        return GetPositionToApproachPlayer();
-    }
-
-
     void StartPath( Vector2 start, Vector2 end, Pathfinding.OnPathDelegate callback )
     {
         lookingAPath = true;
