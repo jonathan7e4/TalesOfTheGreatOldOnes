@@ -37,6 +37,8 @@ public class ZicZacAIController : MonoBehaviour
 
     private void DoFlank()
     {
+        flank.UpdateDistanceToPlayer();
+
         flank.UpdateBehaviour();
 
         timeCounterPostAttack += Time.deltaTime;
