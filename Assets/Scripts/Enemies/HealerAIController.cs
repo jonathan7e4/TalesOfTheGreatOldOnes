@@ -12,7 +12,9 @@ public class HealerAIController : MonoBehaviour
     Heal heal;
     Flank flank;
 
-    public float timeBetweenHealing = 0f;
+    public float healingCooldown = 5f;
+    [HideInInspector]
+    public float lastHealingTime = 0f;
 
     void Start()
     {
@@ -29,18 +31,16 @@ public class HealerAIController : MonoBehaviour
     void Update()
     {
         HealingUpdateLogic();
-
-
     }
 
     void HealingUpdateLogic() {
-        if (timeBetweenHealing <= 0)
+        if (lastHealingTime >= healingCooldown)
         {
             heal.StartBehaviour();
-            timeBetweenHealing = 5f;
+            lastHealingTime = 0f;
         }
 
-        timeBetweenHealing -= Time.deltaTime;
+        lastHealingTime += Time.deltaTime;
     }
 
 

@@ -16,18 +16,20 @@ public class Heal : AIBehaviour
         Vector2 healerPosition = aiTransform.position;
 
         Collider2D[] targets = Physics2D.OverlapCircleAll(healerPosition, maxDistance, LayerMask.GetMask("Enemy"));
+        
         targets.OrderByDescending(target => target.gameObject.GetComponent<AILifeSystem>().hp);
 
         for (int i = 0; i < maxTargets && i < targets.Length; i++)
         {
             Collider2D target = targets[i];
+            var targetLifeSystem = target.gameObject.GetComponent<AILifeSystem>();
 
-            if (target.gameObject == gameObject)
+            if (target.gameObject == gameObject || targetLifeSystem.HasFullHp())
             {
                 continue;
             }
 
-            target.GetComponent<AILifeSystem>().getHealed(healingPower);
+            targetLifeSystem.GetHealed(healingPower);
 
             Debug.DrawLine(healerPosition, (Vector2)target.GetComponent<Transform>().position, Color.blue, 1f);
 
