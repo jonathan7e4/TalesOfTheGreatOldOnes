@@ -2,28 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleport : MonoBehaviour
+public class Teleport : AIBehaviour
 {
     public Transform playerTransform;
     Transform iaTransform;
     Rigidbody2D rb;
     public float offset;
-    public static Teleport instance;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        instance = this;
-        iaTransform = GetComponent<Transform>();
-        rb = GetComponent<Rigidbody2D>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T)) {
-            TeleportToPLayer();
-        }
-    }
 
     public void TeleportToPLayer()
     {
@@ -66,5 +51,27 @@ public class Teleport : MonoBehaviour
         } while (cast && i++<10);
 
         iaTransform.position = target;
+    }
+
+
+    public override void InitBehaviourData()
+    {
+        iaTransform = gameObject.transform;
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    public override void StartBehaviour()
+    {
+        TeleportToPLayer();
+    }
+
+    public override void StopBehaviour()
+    {
+        
+    }
+
+    public override void UpdateBehaviour()
+    {
+        
     }
 }
