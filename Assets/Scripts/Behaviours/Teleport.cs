@@ -51,6 +51,7 @@ public class Teleport : AIBehaviour
         } while (cast && i++<10);
 
         iaTransform.position = target;
+        rb.velocity = Vector3.zero;
     }
 
 

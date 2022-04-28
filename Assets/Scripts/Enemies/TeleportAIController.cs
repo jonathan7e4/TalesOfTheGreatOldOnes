@@ -1,28 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Teleport))]
 [RequireComponent(typeof(Dash))]
+[RequireComponent(typeof(Flank))]
 
 public class TeleportAIController : MonoBehaviour
 {
     Rigidbody2D rb;
     Teleport teleport;
     Dash dash;
+    Flank flank;
 
     public float teleportCooldownTime;
     public float lastTeleportTime;
 
     float waitingTime = 0.5f;
 
-    enum state
+    [HideInInspector]
+    public enum state
     {
         Dashing,
         Waiting,
-        Teleporting
+        Teleporting,
+        FollowingPlayer,
+        WaitToTeleport
     }
-    state currentState = state.Teleporting;
+    public state currentState = state.FollowingPlayer;
 
 
     void Start()
@@ -30,9 +36,11 @@ public class TeleportAIController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         teleport = GetComponent<Teleport>();
         dash = GetComponent<Dash>();
+        flank = GetComponent<Flank>();
 
         teleport.InitBehaviourData();
         dash.InitBehaviourData();
+        flank.InitBehaviourData();
 
         lastTeleportTime = 0f;        
     }
@@ -50,13 +58,31 @@ public class TeleportAIController : MonoBehaviour
             case state.Teleporting:
                 TeleportUpdateLogic();
                 break;
+            case state.FollowingPlayer:
+                FollowPlayer();
+                break;
             default:
                 break;
         }
     }
 
+    private void FollowPlayer()
+    {
+        flank.UpdateBehaviour();
+        rb.velocity = Vector2.zero;
+
+        if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer) {
+            flank.StopBehaviour();
+
+            currentState = state.Teleporting;
+        }
+
+        lastTeleportTime += Time.deltaTime;
+    }
+
     void TeleportUpdateLogic()
     {
+        rb.velocity = Vector2.zero;
         if (lastTeleportTime >= teleportCooldownTime)
         {
             teleport.StartBehaviour();
@@ -65,9 +91,7 @@ public class TeleportAIController : MonoBehaviour
             currentState = state.Waiting;            
         }
         else
-        {
             lastTeleportTime += Time.deltaTime;
-        }
     }
 
     void WaitingUpdateLogic() {
@@ -79,14 +103,17 @@ public class TeleportAIController : MonoBehaviour
             currentState = state.Dashing;
         }
         else
-        {
             waitingTime -= Time.deltaTime;
-        }
     }
 
     void DashingUpdateLogic()
     {
         if (rb.velocity.magnitude == 0f)
-            currentState = state.Teleporting;
+        {
+            if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer)
+                currentState = state.Teleporting;
+            else
+                currentState = state.FollowingPlayer;
+        }
     }
 }
