@@ -146859,7 +146859,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190555716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.69, y: 0.02, z: 0}
+  m_LocalPosition: {x: 6.88, y: 3.44, z: 0}
   m_LocalScale: {x: 38.757, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -146876,16 +146876,18 @@ GameObject:
   - component: {fileID: 1349182070}
   - component: {fileID: 1349182069}
   - component: {fileID: 1349182071}
-  - component: {fileID: 1349182072}
   - component: {fileID: 1349182073}
+  - component: {fileID: 1349182075}
+  - component: {fileID: 1349182072}
   - component: {fileID: 1349182074}
+  - component: {fileID: 1349182076}
   m_Layer: 0
-  m_Name: ZicZacBro
+  m_Name: Hedgehog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1349182069
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -147012,9 +147014,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349182068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e0090a52d75b64aa7f00aaa35e6b74, type: 3}
+  m_Script: {fileID: 11500000, guid: ec34744ee424ac44f8932a713c6cdc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeCounterPostAttack: 0
+  timeToAttackAgain: 3
+--- !u!114 &1349182075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349182068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e38043e9ccf2c94b8a8ba02638f5543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  minDistToPlayer: 4
+  maxDistToPlayer: 8
+  playerTransform: {fileID: 143190769}
+  distanceToPlayer: {x: 0, y: 0}
+--- !u!114 &1349182076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349182068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!1 &1832451891
 GameObject:
   m_ObjectHideFlags: 0
@@ -147108,7 +147157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832451891}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 2.24, z: 0}
+  m_LocalPosition: {x: 0.01, y: 3.64, z: 0}
   m_LocalScale: {x: 38.757, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -147170,16 +147219,17 @@ GameObject:
   - component: {fileID: 1925631846}
   - component: {fileID: 1925631845}
   - component: {fileID: 1925631844}
-  - component: {fileID: 1925631849}
   - component: {fileID: 1925631850}
+  - component: {fileID: 1925631849}
   - component: {fileID: 1925631853}
+  - component: {fileID: 1925631848}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1925631844
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -147278,6 +147328,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1925631848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925631843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5516625beec222489ae1dd7ddbb1110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootReloadTime: 0
+  minDistToPlayer: 4
+  maxDistToPlayer: 8
+  projectile: {fileID: 4722853362569874870, guid: 0942f6f8ab63f4644b07144fd5dcd51e, type: 3}
+  distanceToPlayer: {x: 0, y: 0}
 --- !u!114 &1925631849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147335,9 +147402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  shootReloadTime: 0
   minDistToPlayer: 4
   maxDistToPlayer: 8
   playerTransform: {fileID: 143190769}
-  projectile: {fileID: 4722853362569874870, guid: 0942f6f8ab63f4644b07144fd5dcd51e, type: 3}
-  m_distanceToPlayer: {x: 0, y: 0}
+  distanceToPlayer: {x: 0, y: 0}

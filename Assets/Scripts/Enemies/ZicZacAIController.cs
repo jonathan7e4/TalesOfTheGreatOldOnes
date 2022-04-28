@@ -14,41 +14,24 @@ public class ZicZacAIController : MonoBehaviour
     public float timeCounterPostAttack = 0f;
     public float timeToAttackAgain = 3f;
 
-    enum State { DoingZicZac, DoingFlank }
+    enum State { DoingFlank, DoingZicZac }
     State currentState = State.DoingFlank;
 
-    ZicZac zicZac;
     Flank flank;
+    ZicZac zicZac;
 
 
-    private void Start()
+    void Start()
     {
-        zicZac = GetComponent<ZicZac>();
         flank = GetComponent<Flank>();
+        zicZac = GetComponent<ZicZac>();
 
 
-        zicZac.InitBehaviourData();
         flank.InitBehaviourData();
+        zicZac.InitBehaviourData();
 
 
         flank.StartBehaviour();
-    }
-
-
-    private void DoFlank()
-    {
-        flank.UpdateDistanceToPlayer();
-
-        flank.UpdateBehaviour();
-
-        timeCounterPostAttack += Time.deltaTime;
-
-        if ( timeCounterPostAttack >= timeToAttackAgain && zicZac.CanExecuteBehaviour() )
-        {
-            currentState = State.DoingZicZac;
-            flank.StopBehaviour();
-            zicZac.StartBehaviour();
-        }
     }
 
 
@@ -68,19 +51,36 @@ public class ZicZacAIController : MonoBehaviour
     }
 
 
-    private void Update()
+    private void DoFlank()
     {
+        flank.UpdateBehaviour();
+
+        timeCounterPostAttack += Time.deltaTime;
+
+        if (timeCounterPostAttack >= timeToAttackAgain && zicZac.CanExecuteBehaviour())
+        {
+            currentState = State.DoingZicZac;
+            flank.StopBehaviour();
+            zicZac.StartBehaviour();
+        }
+    }
+
+
+    void Update()
+    {
+        flank.UpdateDistanceToPlayer();
+
         switch ( currentState )
         {
-            case State.DoingZicZac:
-
-                DoZicZac();
-
-                break;
-
             case State.DoingFlank:
 
                 DoFlank();
+
+                break;
+
+            case State.DoingZicZac:
+
+                DoZicZac();
 
                 break;
         }
