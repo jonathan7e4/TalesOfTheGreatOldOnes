@@ -44,7 +44,7 @@ public class ZicZac : AIBehaviour
         Vector2[] targets = new Vector2[movCount];
 
         Vector2 meToPlayer = PlayerController.instance.transform.position - transform.position;
-        Vector2 perp = AIUtils.GetPerpendicular(meToPlayer).normalized;
+        Vector2 perp = PositionUtils.GetPerpendicular(meToPlayer).normalized;
 
         float distBetweenMovs = meToPlayer.magnitude / (movCount + 1f);
 
