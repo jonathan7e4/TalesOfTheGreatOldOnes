@@ -9,30 +9,35 @@ using UnityEngine;
 
 public class TeleportAIController : MonoBehaviour
 {
+    public static TeleportAIController instance;
+
     Rigidbody2D rb;
     Teleport teleport;
     Dash dash;
     Flank flank;
 
-    public float teleportCooldownTime;
-    public float lastTeleportTime;
+    float attackCooldown;
+    public float attackCooldownTimer;
 
-    float waitingTime = 0.5f;
+    int consecutiveAttacks;
+    public int consecutiveAttacksCounter;
 
     [HideInInspector]
-    public enum state
+    public enum State
     {
         Dashing,
         Waiting,
-        Teleporting,
+        Attack,
         FollowingPlayer,
-        WaitToTeleport
+        Resting
     }
-    public state currentState = state.FollowingPlayer;
+    public State currentState = State.FollowingPlayer;
 
 
     void Start()
     {
+        instance = this;
+
         rb = GetComponent<Rigidbody2D>();
         teleport = GetComponent<Teleport>();
         dash = GetComponent<Dash>();
@@ -42,23 +47,24 @@ public class TeleportAIController : MonoBehaviour
         dash.InitBehaviourData();
         flank.InitBehaviourData();
 
-        lastTeleportTime = 0f;        
+        attackCooldownTimer = 0f;
+        consecutiveAttacksCounter = consecutiveAttacks;
     }
 
     void Update()
     {
         switch (currentState)
         {
-            case state.Dashing:
+            case State.Dashing:
                 DashingUpdateLogic();
                 break;
-            case state.Waiting:
-                WaitingUpdateLogic();
+            case State.Resting:
+                RestingUpdateLogic();
                 break;
-            case state.Teleporting:
-                TeleportUpdateLogic();
+            case State.Attack:
+                Attack();
                 break;
-            case state.FollowingPlayer:
+            case State.FollowingPlayer:
                 FollowPlayer();
                 break;
             default:
@@ -69,51 +75,60 @@ public class TeleportAIController : MonoBehaviour
     private void FollowPlayer()
     {
         flank.UpdateBehaviour();
-        rb.velocity = Vector2.zero;
 
         if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer) {
             flank.StopBehaviour();
 
-            currentState = state.Teleporting;
+            currentState = State.Resting;
         }
-
-        lastTeleportTime += Time.deltaTime;
+        else
+            attackCooldownTimer -= Time.deltaTime;
     }
 
-    void TeleportUpdateLogic()
+    void RestingUpdateLogic() {
+        flank.UpdateDistanceToPlayer();
+
+        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
+        {
+            currentState = State.FollowingPlayer;
+        }
+        else if (attackCooldownTimer <= 0f)
+        {
+            attackCooldownTimer = attackCooldown;
+            consecutiveAttacksCounter = consecutiveAttacks;
+            currentState = State.Attack;
+        }
+        else
+            attackCooldownTimer -= Time.deltaTime;
+    }
+
+    void Attack()
     {
-        rb.velocity = Vector2.zero;
-        if (lastTeleportTime >= teleportCooldownTime)
-        {
-            teleport.StartBehaviour();
-            lastTeleportTime = 0f;
+        consecutiveAttacksCounter--;
 
-            currentState = state.Waiting;            
-        }
-        else
-            lastTeleportTime += Time.deltaTime;
-    }
+        teleport.StartBehaviour();
+        dash.StartBehaviour();
 
-    void WaitingUpdateLogic() {
-        if (waitingTime <= 0f)
-        {
-            dash.StartBehaviour();
-
-            waitingTime = 0.25f;
-            currentState = state.Dashing;
-        }
-        else
-            waitingTime -= Time.deltaTime;
+        currentState = State.Dashing;
     }
 
     void DashingUpdateLogic()
     {
         if (rb.velocity.magnitude == 0f)
         {
-            if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer)
-                currentState = state.Teleporting;
+            if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
+                currentState = State.FollowingPlayer;
+            else if (consecutiveAttacksCounter == 0)
+                currentState = State.Resting;
             else
-                currentState = state.FollowingPlayer;
+                currentState = State.Attack;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Player") {
+            //rb.velocity = Vector2.zero;
         }
     }
 }

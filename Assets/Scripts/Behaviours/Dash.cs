@@ -9,6 +9,12 @@ public class Dash : AIBehaviour
     Rigidbody2D rb;
     Transform transform;
 
+    public float dashDistance;
+    public float dashSpeed;
+    public float acceleration;
+
+    public float dashFactor;
+
     IEnumerator MakeDash(Vector2 direction, float distance, float speed, float acceleration)
     {
         float traveledDistance = 0.0f;
@@ -47,7 +53,7 @@ public class Dash : AIBehaviour
     public override void StartBehaviour()
     {
         Vector2 toTarget = playerTransform.position - transform.position;
-        StartCoroutine(MakeDash(toTarget, 2f, 16f, 32f));
+        StartCoroutine(MakeDash(toTarget, 4f, 12f*dashFactor, 16f*dashFactor));
     }
 
     public override void StopBehaviour()

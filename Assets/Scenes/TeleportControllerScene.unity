@@ -240,7 +240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143190765}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.03, y: -3.68, z: 0}
   m_LocalScale: {x: 0.43456525, y: 0.43456525, z: 0.08691304}
   m_Children: []
   m_Father: {fileID: 0}
@@ -146962,7 +146962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349182068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.15, y: -0.38, z: 0}
+  m_LocalPosition: {x: -5.05, y: -0.33, z: 0}
   m_LocalScale: {x: 7.3357, y: 7.3357, z: 7.3357}
   m_Children: []
   m_Father: {fileID: 0}
@@ -146996,8 +146996,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa277693a47034022b2c561b0b7ce605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportCooldownTime: 0.5
-  lastTeleportTime: 0
+  attackCooldown: 0.2
+  attackCooldownTimer: 0
+  consecutiveAttacks: 5
+  consecutiveAttacksCounter: 0
   currentState: 3
 --- !u!50 &1349182073
 Rigidbody2D:
@@ -147033,6 +147035,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 143190769}
+  dashDistance: 0
+  dashSpeed: 0
+  acceleration: 0
+  dashFactor: 1
 --- !u!114 &1349182075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147046,7 +147052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 143190769}
-  offset: 3
+  offset: 4
 --- !u!114 &1349182076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147062,7 +147068,7 @@ MonoBehaviour:
   speed: 3
   shootReloadTime: 0
   minDistToPlayer: 0
-  maxDistToPlayer: 8
+  maxDistToPlayer: 5
   playerTransform: {fileID: 143190769}
   projectile: {fileID: 0}
   distanceToPlayer: {x: 0, y: 0}
