@@ -12,11 +12,9 @@ public class Flank : AIBehaviour
     Coroutine seekPathRoutine;
     // PUBLIC ATTRIBUTES
     public float speed = 3f;
-    public float shootReloadTime;
     public float minDistToPlayer = 4f;
     public float maxDistToPlayer = 8f;
     public Transform playerTransform;
-    public GameObject projectile;
     public Vector2 distanceToPlayer;
     // PRIVATE ATTRIBUTES
     public bool lookingAPath = false;
