@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Flank))]
+[RequireComponent(typeof(HealerFlank))]
 [RequireComponent(typeof(Heal))]
 
 public class HealerAIController : MonoBehaviour
@@ -10,38 +10,86 @@ public class HealerAIController : MonoBehaviour
     Rigidbody2D rb;
 
     Heal heal;
-    Flank flank;
+    HealerFlank flank;
 
     public float healingCooldown = 5f;
-    [HideInInspector]
     public float lastHealingTime = 0f;
+
+    [HideInInspector]
+    public enum State
+    {
+        FollowingEnemy,
+        Waiting,
+        Healing,
+    }
+    public State currentState;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
         heal = GetComponent<Heal>();
-        flank = GetComponent<Flank>();
+        flank = GetComponent<HealerFlank>();
 
         heal.InitBehaviourData();
         flank.InitBehaviourData();
+
+        currentState = State.FollowingEnemy;
+        flank.StartBehaviour();
     }
 
     
     void Update()
     {
-        HealingUpdateLogic();
-    }
-
-    void HealingUpdateLogic() {
-        if (lastHealingTime >= healingCooldown)
+        switch (currentState)
         {
-            heal.StartBehaviour();
-            lastHealingTime = 0f;
-        }
-
-        lastHealingTime += Time.deltaTime;
+            case State.FollowingEnemy:
+                FollowEnemyLogic();
+                break;
+            case State.Waiting:
+                UpdateLogic();
+                break;
+            case State.Healing:
+                Heal();
+                break;
+        }        
     }
 
+    private void FollowEnemyLogic()
+    {
+        flank.UpdateBehaviour();
 
+        if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer)
+        {
+            flank.StopBehaviour();
+
+            currentState = State.Waiting;
+        }
+        else
+            lastHealingTime -= Time.deltaTime;
+    }
+
+    void Heal()
+    {
+        heal.StartBehaviour();
+        lastHealingTime = 0f;
+
+        currentState = State.Waiting;
+    }
+
+    void UpdateLogic()
+    {
+        flank.UpdateDistanceToPlayer();
+
+        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
+        {
+            currentState = State.FollowingEnemy;
+            flank.StartBehaviour();
+        }
+        
+        if (lastHealingTime >= healingCooldown)
+            currentState = State.Healing;
+        else
+            lastHealingTime += Time.deltaTime;
+    }
 }

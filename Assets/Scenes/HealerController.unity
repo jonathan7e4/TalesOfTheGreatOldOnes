@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b40a7d9c08b895e408e222b8cae9a93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack: 50
+  attack: 1000
 --- !u!1 &213207999
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213207999}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.41, y: -3.86, z: -1.1893673}
+  m_LocalPosition: {x: -4.63, y: -3.83, z: -1.1893673}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -637,7 +637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582813934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7, y: -2.4, z: -1.1893673}
+  m_LocalPosition: {x: -5.24, y: -2.87, z: -1.1893673}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -751,7 +751,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633672913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.41, y: -2.23, z: -1.1893673}
+  m_LocalPosition: {x: -4.85, y: -0.31, z: -1.1893673}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -887,8 +887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca44af23c68fe6c44bc731c26b11f9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 143190769}
-  speedScale: 0
+  downLeftMapPosition: {x: 0, y: 0}
+  upRightMapPosition: {x: 0, y: 0}
 --- !u!50 &1014229555
 Rigidbody2D:
   serializedVersion: 4
@@ -147236,7 +147236,8 @@ GameObject:
   - component: {fileID: 1349182072}
   - component: {fileID: 1349182075}
   - component: {fileID: 1349182074}
-  m_Layer: 6
+  - component: {fileID: 1349182076}
+  m_Layer: 0
   m_Name: HealerBro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147302,7 +147303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349182068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.51, y: -3.25, z: 0}
+  m_LocalPosition: {x: 0.52, y: -1.94, z: 0}
   m_LocalScale: {x: 7.3357, y: 7.3357, z: 7.3357}
   m_Children: []
   m_Father: {fileID: 0}
@@ -147338,6 +147339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healingCooldown: 5
   lastHealingTime: 0
+  currentState: 0
 --- !u!50 &1349182073
 Rigidbody2D:
   serializedVersion: 4
@@ -147371,7 +147373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eca8c0f807d9f844b31796e546b1c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 10
+  maxDistance: 6
   maxTargets: 5
   healingPower: 100
 --- !u!114 &1349182075
@@ -147383,16 +147385,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349182068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e38043e9ccf2c94b8a8ba02638f5543, type: 3}
+  m_Script: {fileID: 11500000, guid: ff2d59afe1c5a2041b655eb7fc35547d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  shootReloadTime: 0
-  minDistToPlayer: 4
-  maxDistToPlayer: 8
-  playerTransform: {fileID: 0}
-  projectile: {fileID: 0}
-  m_distanceToPlayer: {x: 0, y: 0}
+  speed: 2
+  minDistToPlayer: 2
+  maxDistToPlayer: 4
+  enemyTransform: {fileID: 0}
+  distanceToPlayer: {x: 0, y: 0}
+  lookingAPath: 0
+  followingPath: 0
+--- !u!114 &1349182076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349182068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!1 &1631649189
 GameObject:
   m_ObjectHideFlags: 0
@@ -147485,7 +147515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631649189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.666877, y: -2.9442327, z: -1.1893673}
+  m_LocalPosition: {x: 6.94, y: -3.16, z: -1.1893673}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -147758,7 +147788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2023976275}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.84, y: -1.75, z: -1.1893673}
+  m_LocalPosition: {x: -2.85, y: -0.11, z: -1.1893673}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
