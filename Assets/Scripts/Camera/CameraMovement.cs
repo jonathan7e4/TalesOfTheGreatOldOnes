@@ -4,45 +4,72 @@ using UnityEngine;
 
 
 public class CameraMovement : MonoBehaviour
-{
-    public Transform player;
-    public float speedScale;
-
-
+{   // PUBLIC ATTRIBUTES
+    public Vector2 downLeftMapPosition;
+    public Vector2 upRightMapPosition;
+    // PRIVATE ATTRIBUTES
+    float speedScale = 10;
+    float maxVerticalDistanceToPlayer = 1.5f;
+    float maxHorizontalDistanceToPlayer = 3f;
+    Transform playerTransform;
     Rigidbody2D rigidBody2D;
+    Vector2 cameraToPlayer;
+
+
+    void DrawRedDiagonalLine()
+    {
+        var upLeft = (Vector2) playerTransform.transform.position + Vector2.left * maxHorizontalDistanceToPlayer + Vector2.up * maxVerticalDistanceToPlayer;
+        var rightDown = (Vector2) playerTransform.transform.position + Vector2.right * maxHorizontalDistanceToPlayer + Vector2.down * maxVerticalDistanceToPlayer;
+
+        Debug.DrawLine( upLeft, rightDown, Color.red );
+    }
+
+
+    Vector2 LimitPositionInsideMap( Vector2 position )
+    {
+        position.x = Mathf.Clamp( position.x, downLeftMapPosition.x, upRightMapPosition.x );
+        position.y = Mathf.Clamp( position.y, downLeftMapPosition.y, upRightMapPosition.y );
+        return position;
+    }
+
+
+    void FollowAroundPlayer( Vector2 cameraToPlayer )
+    {
+        Vector2 newPosition = transform.position;
+
+        if ( cameraToPlayer.y > maxVerticalDistanceToPlayer ) newPosition.y = playerTransform.position.y - maxVerticalDistanceToPlayer;
+        if ( cameraToPlayer.x > maxHorizontalDistanceToPlayer ) newPosition.x = playerTransform.position.x - maxHorizontalDistanceToPlayer;
+        if ( cameraToPlayer.y < - maxVerticalDistanceToPlayer ) newPosition.y = playerTransform.position.y + maxVerticalDistanceToPlayer;
+        if ( cameraToPlayer.x < - maxHorizontalDistanceToPlayer ) newPosition.x = playerTransform.position.x + maxHorizontalDistanceToPlayer;
+
+        transform.position = LimitPositionInsideMap( newPosition );
+    }
+
+
+    // USES "speedScale" TO FOLLOW WHERE THE PLAYER IS. CURRENTLY UNUSED. IT'S HERE FOR DIDACTIC PURPOSES.
+    void FollowPlayer( Vector2 cameraToPlayer )
+    {
+        rigidBody2D.velocity = cameraToPlayer * speedScale * Time.deltaTime * 100;
+    }
 
     
     void Update()
     {
-        //if (Input.GetKeyUp(KeyCode.Space)) Shake.instance.ShakeIt();
+        //if ( Input.GetKeyUp( KeyCode.Space ) ) Shake.instance.ShakeIt();
+        cameraToPlayer = playerTransform.position - transform.position;
 
+        // FOLLOWS THE PLAYER LEAVING SOME DISTANCE RELATIVE TO THE LIMITS DEFINED.
+        FollowAroundPlayer( cameraToPlayer );
 
-        float maxYDistToPlayer = 1.5f;
-        float maxXDistToPlayer = 3f;
-        var camToPlayer = player.position - transform.position;
-
-        rigidBody2D.velocity = camToPlayer * speedScale * Time.deltaTime * 100;
-
-        
-        Vector3 newPos = transform.position;
-
-        if (camToPlayer.y > maxYDistToPlayer) newPos.y = player.position.y - maxYDistToPlayer;
-        if (camToPlayer.x > maxXDistToPlayer) newPos.x = player.position.x - maxXDistToPlayer;
-        if (camToPlayer.y < -maxYDistToPlayer) newPos.y = player.position.y + maxYDistToPlayer;
-        if (camToPlayer.x < -maxXDistToPlayer) newPos.x = player.position.x + maxXDistToPlayer;
-
-        transform.position = newPos;
-
-
-        var upLeft = (Vector2)player.transform.position + Vector2.left * maxXDistToPlayer + Vector2.up * maxYDistToPlayer;
-        var rightDown = (Vector2)player.transform.position + Vector2.right * maxXDistToPlayer + Vector2.down * maxYDistToPlayer;
-
-        Debug.DrawLine(upLeft, rightDown, Color.red);
+        // DRAWS A LINE FROM THE POSITIONS THAT THE CAMERA FOLLOWS THE PLAYER. FOR DEBUGGING PURPOSES.
+        DrawRedDiagonalLine();
     }
 
 
-    private void Start()
+    void Start()
     {
+        playerTransform = PlayerController.instance.transform;
+
         rigidBody2D = GetComponent<Rigidbody2D>();
     }
 }
