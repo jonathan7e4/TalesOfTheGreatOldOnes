@@ -2,26 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dash : MonoBehaviour
+public class Dash : AIBehaviour
 {
-
+    public Transform playerTransform;
     public static Dash instance;
     Rigidbody2D rb;
     Transform transform;
 
-    private void Awake()
-    {
-        instance = this;
-        rb = GetComponent<Rigidbody2D>();
-        transform = GetComponent<Transform>();
-    }
+    public float dashDistance;
+    public float dashSpeed;
+    public float acceleration;
 
-    IEnumerator MakeDash(float distance, float speed, float acceleration)
+    public float dashFactor;
+
+    IEnumerator MakeDash(Vector2 direction, float distance, float speed, float acceleration)
     {
         float traveledDistance = 0.0f;
         var initPosition = transform.position;
 
-        rb.velocity = Vector2.right;
+        rb.velocity = direction.normalized;
 
         while (traveledDistance < distance)
         {
@@ -45,9 +44,25 @@ public class Dash : MonoBehaviour
         }
     }
 
-    public void StartDash()
+    public override void InitBehaviourData()
     {
-        if (instance == null) { Awake();}
-        StartCoroutine(MakeDash(2f, 16f, 32f));
+        rb = GetComponent<Rigidbody2D>();
+        transform = GetComponent<Transform>();
+    }
+
+    public override void StartBehaviour()
+    {
+        Vector2 toTarget = playerTransform.position - transform.position;
+        StartCoroutine(MakeDash(toTarget, 4f, 12f*dashFactor, 16f*dashFactor));
+    }
+
+    public override void StopBehaviour()
+    {
+        
+    }
+
+    public override void UpdateBehaviour()
+    {
+        
     }
 }

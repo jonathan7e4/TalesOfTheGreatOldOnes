@@ -29,7 +29,7 @@ public class ArcherAIController : MonoBehaviour
 
     void Shoot()
     {
-        shoot.ShootLogicUpdate();
+        shoot.UpdateBehaviour();
 
         if ( !PositionUtils.AroundPlayer( flank.distanceToPlayer, flank.maxDistToPlayer, flank.minDistToPlayer ) )
         {

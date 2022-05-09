@@ -12,15 +12,13 @@ public class Flank : AIBehaviour
     Coroutine seekPathRoutine;
     // PUBLIC ATTRIBUTES
     public float speed = 3f;
-    public float shootReloadTime;
     public float minDistToPlayer = 4f;
     public float maxDistToPlayer = 8f;
     public Transform playerTransform;
-    public GameObject projectile;
     public Vector2 distanceToPlayer;
     // PRIVATE ATTRIBUTES
-    bool lookingAPath = false;
-    bool followingPath;
+    public bool lookingAPath = false;
+    public bool followingPath;
     float timeFollowingPathCount;
     Vector2 lastPathNodePos;
 
@@ -250,6 +248,7 @@ public class Flank : AIBehaviour
     public override void StopBehaviour()
     {
         FinishFollowingPath();
+        try { StopCoroutine( seekPathRoutine ); } catch ( System.NullReferenceException ) { Debug.Log( "Flank.cs: The coroutine was null" ); };
     }
 
 
