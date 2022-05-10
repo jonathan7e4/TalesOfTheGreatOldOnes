@@ -22,7 +22,7 @@ public class HealerFlank : AIBehaviour
     public bool followingPath;
     float timeFollowingPathCount;
     Vector2 lastPathNodePos;
-
+    public bool hasEnemiesAround = false;
 
     Vector2 GetPositionToApproachPlayer()
     {
@@ -147,21 +147,14 @@ public class HealerFlank : AIBehaviour
 
     public void UpdateDistanceToPlayer()
     {
-        distanceToPlayer = enemyTransform.position - transform.position;
+        if (hasEnemiesAround)
+            distanceToPlayer = enemyTransform.position - transform.position;
     }
 
 
     public void FollowPlayerLogicUpdate()
     {
-        try
-        {
-            UpdateDistanceToPlayer();
-        }
-        catch (MissingReferenceException)
-        {
-            UpdateClosestTransform();
-            //UpdateDistanceToPlayer();
-        }
+        UpdateDistanceToPlayer();
 
         float distanceToPlayer = Vector2.Distance( lastPathNodePos, (Vector2) enemyTransform.position );
 
@@ -230,10 +223,20 @@ public class HealerFlank : AIBehaviour
     void UpdateClosestTransform()
     {
         Collider2D[] enemiesAround = Physics2D.OverlapCircleAll(transform.position, 10f, LayerMask.GetMask("Enemy"));
-        float closestDistance = enemiesAround.Min(e => (e.transform.position - transform.position).magnitude);
-        Collider2D closestEnemy = enemiesAround.First(e => (e.transform.position - transform.position).magnitude == closestDistance);
+        if (enemiesAround.Length == 0)
+        {
+            hasEnemiesAround = false;
+        }
+        else
+        {
+            float closestDistance = enemiesAround.Min(e => (e.transform.position - transform.position).magnitude);
+            Collider2D closestEnemy = enemiesAround.First(e => (e.transform.position - transform.position).magnitude == closestDistance);
 
-        enemyTransform = closestEnemy.transform;
+            enemyTransform = closestEnemy.transform;
+
+            hasEnemiesAround = true;
+        }
+        
     }
 
 
@@ -260,7 +263,7 @@ public class HealerFlank : AIBehaviour
     public override void StartBehaviour()
     {
         UpdateClosestTransform();
-        FollowPlayerLogicUpdate();
+        //FollowPlayerLogicUpdate();
     }
 
 
@@ -273,12 +276,15 @@ public class HealerFlank : AIBehaviour
 
     public override void UpdateBehaviour()
     {
-        if ( !PositionUtils.AroundPlayer( distanceToPlayer, maxDistToPlayer, minDistToPlayer ) ) FollowPlayerLogicUpdate();
+        if (hasEnemiesAround)
+            if (!PositionUtils.AroundPlayer(distanceToPlayer, maxDistToPlayer, minDistToPlayer)) FollowPlayerLogicUpdate();
+            
     }
 
     private void FixedUpdate()
     {
-        //if null volver a elegir
+        if (enemyTransform == null) 
+            UpdateClosestTransform();
     }
 
 }
