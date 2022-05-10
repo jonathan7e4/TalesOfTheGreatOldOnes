@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class HealerAIController : MonoBehaviour
 {
-    Rigidbody2D rb;
-
     Heal heal;
     HealerFlank flank;
 
@@ -26,8 +24,6 @@ public class HealerAIController : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-
         heal = GetComponent<Heal>();
         flank = GetComponent<HealerFlank>();
 
@@ -59,7 +55,7 @@ public class HealerAIController : MonoBehaviour
     {
         flank.UpdateBehaviour();
 
-        if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer)
+        if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer || !flank.hasEnemiesAround)
         {
             flank.StopBehaviour();
 
@@ -81,7 +77,7 @@ public class HealerAIController : MonoBehaviour
     {
         flank.UpdateDistanceToPlayer();
 
-        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
+        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer && flank.hasEnemiesAround)
         {
             currentState = State.FollowingEnemy;
             flank.StartBehaviour();
