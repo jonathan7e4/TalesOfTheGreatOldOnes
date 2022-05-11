@@ -32,7 +32,7 @@ public class MeleeAttack : MonoBehaviour
     {
         Vector2 playerPosition = playerTransform.position;
 
-        float attackDistance = 1.5f;
+        float attackDistance = 2f;
         Vector2 newAttackDir = playerController.GetPlayerDirection();
         attackDir = newAttackDir== Vector2.zero? playerController.FacingDirection(): newAttackDir;
 
@@ -45,13 +45,11 @@ public class MeleeAttack : MonoBehaviour
             Vector2 enemyPosition = enemy.gameObject.GetComponent<Transform>().position;
             Vector2 playerToEnemy = enemyPosition - playerPosition;
 
+            Debug.DrawLine(playerPosition, enemyPosition, Color.blue, 1f);
             var angle = Vector2Extension.AngleBetweenVector2(attackDir, playerToEnemy.normalized);
 
             if (angle < maxAngle && angle > -maxAngle)
-            {
-                Debug.DrawLine(playerPosition, enemyPosition, Color.red, 1f);
                 enemy.GetComponent<AILifeSystem>().TakeDamage(attack);
-            }
         }
     }
 }

@@ -4,56 +4,36 @@ using System.Linq;
 using UnityEngine;
 
 
-public class Heal : AIBehaviour
+public class Heal : MonoBehaviour
 {
     Transform aiTransform;
     public float maxDistance;
     public int maxTargets;
-    public float healingPower;
-
-    IEnumerator HealEnemies() 
+    // Start is called before the first frame update
+    void Start()
     {
+        aiTransform = GetComponent<Transform>();
+    }
+
+    public void HealEnemies() {
+        if (aiTransform == null) {Start();}
+        
         Vector2 healerPosition = aiTransform.position;
 
         Collider2D[] targets = Physics2D.OverlapCircleAll(healerPosition, maxDistance, LayerMask.GetMask("Enemy"));
-        
-        targets.OrderByDescending(target => target.gameObject.GetComponent<AILifeSystem>().hp);
+        targets.OrderByDescending(x => x.gameObject.GetComponent<AILifeSystem>().hp);
 
-        for (int i = 0; i < maxTargets && i < targets.Length; i++)
+
+        for (int i = 0; i < maxTargets; i++)
         {
             Collider2D target = targets[i];
-            var targetLifeSystem = target.gameObject.GetComponent<AILifeSystem>();
 
-            if (target.gameObject == gameObject || targetLifeSystem.HasFullHp())
-            {
+            if (target.gameObject == gameObject)
                 continue;
-            }
 
-            targetLifeSystem.GetHealed(healingPower);
+            target.GetComponent<AILifeSystem>().getHealed();
 
             Debug.DrawLine(healerPosition, (Vector2)target.GetComponent<Transform>().position, Color.blue, 1f);
-
-            yield return null;
         }
-    }
-
-    public override void InitBehaviourData()
-    {
-        aiTransform = gameObject.transform;
-    }
-
-    public override void StartBehaviour()
-    {
-        StartCoroutine(HealEnemies());
-    }
-
-    public override void StopBehaviour()
-    {
-        
-    }
-
-    public override void UpdateBehaviour()
-    {
-        
     }
 }

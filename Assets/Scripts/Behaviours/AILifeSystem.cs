@@ -4,40 +4,32 @@ using UnityEngine;
 
 public class AILifeSystem : MonoBehaviour
 {
-    public float maxHp;
-    [HideInInspector]
+    public float maxHp = 20f;
     public float hp;
-
+    // Start is called before the first frame update
     void Start()
     {
-        hp = maxHp;
+        
     }
 
+    // Update is called once per frame
     void Update()
     {
-        if (hp <= 0)
-        {
+        if (hp <= 0) {
             Destroy(gameObject);
         }
     }
 
-    public void TakeDamage(float attackStrength)
+    public void TakeDamage(float attackStrength) 
     {
+        Debug.Log("Me dieron");
         hp -= attackStrength;
-        Debug.Log("Ouch (" + hp + ")");
     }
 
-    public void GetHealed(float hpHealed)
-    {
-        if (hp < maxHp)
-        {
-            hp = Mathf.Min(hp += hpHealed, maxHp);
-            Debug.Log("Healed" + hp + ")");
+    public void getHealed() {
+        if (hp < maxHp) {
+            hp = Mathf.Min(hp += maxHp / 5, maxHp);
+            Debug.Log("Me curaron");
         }
-    }
-
-    public bool HasFullHp()
-    {
-        return hp == maxHp;
     }
 }
