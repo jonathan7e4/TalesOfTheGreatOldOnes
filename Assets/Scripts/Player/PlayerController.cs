@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(PlayerDash))]
+[RequireComponent(typeof(MeleeAttack))]
 public class PlayerController : MonoBehaviour
 {
 
     public static PlayerController instance;
 
     Rigidbody2D rigidBody2D;
+    PlayerDash dash;
     KeyboardStatus keyboardStatus = new KeyboardStatus();
     public Animator animator;
 
@@ -18,6 +20,14 @@ public class PlayerController : MonoBehaviour
 
     Vector2 facingDirection;
 
+    public enum state
+    {
+        Normal,
+        Running,
+        Dashing
+    }
+    public state currentState = state.Normal;
+
     class KeyboardStatus
     {
         public bool up;
@@ -25,7 +35,7 @@ public class PlayerController : MonoBehaviour
         public bool left;
         public bool right;
         public bool keyPressed;
-
+        public bool shift;
 
         public void SetKeyPressed()
         {
@@ -115,6 +125,24 @@ public class PlayerController : MonoBehaviour
                 facingDirection = Vector2.right;
             }
         else if (Input.GetKeyUp(KeyCode.D)) keyboardStatus.right = false;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && currentState != state.Dashing && StaminaSystem.instance.currentStamina > 25)
+        {
+            if (keyboardStatus.shift)
+            {
+                currentState = state.Running;
+            }
+            else
+            {
+                keyboardStatus.shift = true;
+                dash.StartBehaviour();
+                StaminaSystem.instance.currentStamina -= 25;
+                currentState = state.Dashing;
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            keyboardStatus.shift = false;
+        }
     }
 
 
@@ -122,11 +150,17 @@ public class PlayerController : MonoBehaviour
     {
         HandleInput();
 
-        SetCurrentSpeed();
-
-        Vector2 playerDirection = GetPlayerDirection();
-
-        rigidBody2D.velocity = playerDirection * currentSpeed;
+        switch (currentState)
+        {
+            case state.Normal:
+                normalUpdate();
+                break;
+            case state.Running:
+                break;
+            case state.Dashing:
+                dashingUpdate();
+                break;
+        }
     }
 
 
@@ -134,5 +168,31 @@ public class PlayerController : MonoBehaviour
     {
         instance = this;
         rigidBody2D = GetComponent<Rigidbody2D>();
+        dash = GetComponent<PlayerDash>();
+
+        dash.InitBehaviourData();
+    }
+
+    void normalUpdate()
+    {
+        SetCurrentSpeed();
+
+        Vector2 playerDirection = GetPlayerDirection();
+
+        rigidBody2D.velocity = playerDirection * currentSpeed;
+    }
+
+    void dashingUpdate()
+    {
+        if (!dash.dashing)
+            currentState = state.Normal;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag.Equals("Obstacle"))
+        {
+            currentState = state.Normal;
+        }
     }
 }
