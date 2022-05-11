@@ -18,12 +18,19 @@ public class PlayerController : MonoBehaviour
 
     Vector2 facingDirection;
 
+
+    public Vector2 FacingDirection() { return facingDirection; }
+
+
     class KeyboardStatus
     {
         public bool up;
         public bool down;
         public bool left;
         public bool right;
+
+        public bool attackingKey;
+
         public bool keyPressed;
 
 
@@ -86,8 +93,6 @@ public class PlayerController : MonoBehaviour
         return playerDirection;
     }
 
-    public Vector2 FacingDirection() { return facingDirection; }
-
 
     void HandleInput()
     {
@@ -115,6 +120,9 @@ public class PlayerController : MonoBehaviour
                 facingDirection = Vector2.right;
             }
         else if (Input.GetKeyUp(KeyCode.D)) keyboardStatus.right = false;
+
+        if ( Input.GetKeyDown( KeyCode.Space ) ) keyboardStatus.attackingKey = true;
+        else if ( Input.GetKeyUp( KeyCode.Space ) ) keyboardStatus.attackingKey = false;
     }
 
 
@@ -127,6 +135,10 @@ public class PlayerController : MonoBehaviour
         Vector2 playerDirection = GetPlayerDirection();
 
         rigidBody2D.velocity = playerDirection * currentSpeed;
+
+        if ( animator.GetBool( "Attacking" ) ) Debug.Log( "Attacking..." );
+        if ( keyboardStatus.attackingKey ) animator.SetBool( "Attacking", true );
+        else animator.SetBool( "Attacking", false );
     }
 
 
