@@ -10,12 +10,13 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rigidBody2D;
     KeyboardStatus keyboardStatus = new KeyboardStatus();
-    public Animator animator;
+    public GameObject animatedObject;
 
     public float speed = 4f;
     float currentSpeed = 0f;
     float acceleration = 200f;
 
+    Animator animator;
     Vector2 facingDirection;
 
 
@@ -144,6 +145,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        animator = animatedObject.GetComponent<Animator>();
         instance = this;
         rigidBody2D = GetComponent<Rigidbody2D>();
     }
