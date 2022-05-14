@@ -24,6 +24,7 @@ public class MeleeAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            StaminaSystem.instance.currentStamina = Mathf.Max(0, StaminaSystem.instance.currentStamina - 15f);
             Attack();
         }
     }
@@ -32,7 +33,7 @@ public class MeleeAttack : MonoBehaviour
     {
         Vector2 playerPosition = playerTransform.position;
 
-        float attackDistance = 1.5f;
+        float attackDistance = 0.75f;
         Vector2 newAttackDir = playerController.GetPlayerDirection();
         attackDir = newAttackDir== Vector2.zero? playerController.FacingDirection(): newAttackDir;
 

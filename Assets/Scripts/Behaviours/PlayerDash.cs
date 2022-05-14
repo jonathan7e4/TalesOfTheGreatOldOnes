@@ -8,8 +8,6 @@ public class PlayerDash : AIBehaviour
     Rigidbody2D rb;
     Transform transform;
 
-    public float dashFactor;
-
     public bool dashing;
 
     IEnumerator MakeDash(float distance, float maxSpeed, float acceleration)
@@ -38,7 +36,7 @@ public class PlayerDash : AIBehaviour
         while (rb.velocity.magnitude > initSpeed)
         {
             var currentSpeed = rb.velocity.magnitude;
-            var newSpeed = Mathf.Max(0f, currentSpeed - acceleration * 2f * Time.deltaTime);
+            var newSpeed = Mathf.Max(0f, currentSpeed - acceleration * (4f - initSpeed) * Time.deltaTime);
 
             rb.velocity = rb.velocity.normalized * newSpeed;
             yield return null;
@@ -56,7 +54,12 @@ public class PlayerDash : AIBehaviour
 
     public override void StartBehaviour()
     {
-        StartCoroutine(MakeDash(1f, 8f*dashFactor, 16f*dashFactor));
+        float playerSpeed = PlayerController.instance.speed;
+        float distance = playerSpeed / 3;
+        float maxDashSpeed = playerSpeed * 8;
+        float acceleration = maxDashSpeed * 4;
+
+        StartCoroutine(MakeDash(distance, maxDashSpeed, acceleration));
     }
 
     public override void StopBehaviour()
