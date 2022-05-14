@@ -7,7 +7,8 @@ public class MeleeAttack : MonoBehaviour
 {
     Transform playerTransform;
     public static MeleeAttack instance;
-    public float attack;
+    public float attack = 100;
+    public float attackDistance = 1f;
     PlayerController playerController;
     Vector2 attackDir;
 
@@ -19,20 +20,10 @@ public class MeleeAttack : MonoBehaviour
         attackDir = Vector2.zero;
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StaminaSystem.instance.currentStamina = Mathf.Max(0, StaminaSystem.instance.currentStamina - 15f);
-            Attack();
-        }
-    }
-
     public void Attack()
     {
         Vector2 playerPosition = playerTransform.position;
 
-        float attackDistance = 0.75f;
         Vector2 newAttackDir = playerController.GetPlayerDirection();
         attackDir = newAttackDir== Vector2.zero? playerController.FacingDirection(): newAttackDir;
 

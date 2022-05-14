@@ -36,7 +36,7 @@ public class PlayerDash : AIBehaviour
         while (rb.velocity.magnitude > initSpeed)
         {
             var currentSpeed = rb.velocity.magnitude;
-            var newSpeed = Mathf.Max(0f, currentSpeed - acceleration * (4f - initSpeed) * Time.deltaTime);
+            var newSpeed = Mathf.Max(0f, currentSpeed - acceleration * 2f * Time.deltaTime);
 
             rb.velocity = rb.velocity.normalized * newSpeed;
             yield return null;
@@ -55,8 +55,8 @@ public class PlayerDash : AIBehaviour
     public override void StartBehaviour()
     {
         float playerSpeed = PlayerController.instance.speed;
-        float distance = playerSpeed / 3;
-        float maxDashSpeed = playerSpeed * 8;
+        float distance = playerSpeed / 4;
+        float maxDashSpeed = playerSpeed * 6;
         float acceleration = maxDashSpeed * 4;
 
         StartCoroutine(MakeDash(distance, maxDashSpeed, acceleration));

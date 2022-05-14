@@ -19,8 +19,11 @@ public class PlayerController : MonoBehaviour
     KeyboardStatus keyboardStatus = new KeyboardStatus();
     Rigidbody2D rigidBody2D;
     PlayerDash dash;
+    MeleeAttack meleeAttack;
     Animator animator;
 
+    [HideInInspector]
+    public bool exhausted = false;
 
     public class KeyboardStatus
     {
@@ -118,20 +121,22 @@ public class PlayerController : MonoBehaviour
         if ( Input.GetKeyDown( KeyCode.D ) ) keyboardStatus.right = true;
         else if ( Input.GetKeyUp( KeyCode.D ) ) keyboardStatus.right = false;
 
-        if ( Input.GetKeyDown( KeyCode.LeftShift ) && currentState != state.Dashing )
+        if ( Input.GetKeyDown( KeyCode.LeftShift ) && currentState != state.Dashing && !exhausted)
         {
             keyboardStatus.shift = true;
-            if ( StaminaSystem.instance.currentStamina > 10 )
-            {
-                dash.StartBehaviour();
-                StaminaSystem.instance.currentStamina -= 15;
-                currentState = state.Dashing;
-            }
+            dash.StartBehaviour();
+            StaminaSystem.instance.currentStamina -= 10;
+            currentState = state.Dashing;
         }
         else if ( Input.GetKeyUp( KeyCode.LeftShift ) ) keyboardStatus.shift = false;
 
-        if ( Input.GetKeyDown( KeyCode.Space ) ) keyboardStatus.attackingKey = true;
-        else if ( Input.GetKeyUp( KeyCode.Space ) ) keyboardStatus.attackingKey = false;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            animator.SetBool("Attacking", true);
+            StaminaSystem.instance.currentStamina = Mathf.Max(0, StaminaSystem.instance.currentStamina - 5f);
+            meleeAttack.Attack();
+        }
+        else if (Input.GetKeyUp(KeyCode.Space)) animator.SetBool("Attacking", false);
     }
 
 
@@ -170,7 +175,7 @@ public class PlayerController : MonoBehaviour
 
             rigidBody2D.velocity = playerDirection * currentSpeed * 2f;
 
-            StaminaSystem.instance.currentStamina -= 20f * Time.deltaTime;
+            StaminaSystem.instance.currentStamina -= 10f * Time.deltaTime;
 
         }
         else currentState = state.Normal;
@@ -183,10 +188,8 @@ public class PlayerController : MonoBehaviour
 
         Vector2 playerDirection = GetPlayerDirection();
 
-        rigidBody2D.velocity = playerDirection * currentSpeed * StaminaSystem.instance.staminaDebuff;
-
-        if ( keyboardStatus.attackingKey ) animator.SetBool( "Attacking", true );
-        else animator.SetBool( "Attacking", false );
+        Vector2 finalSpeed = playerDirection * currentSpeed;
+        rigidBody2D.velocity = exhausted? finalSpeed * 0.5f : finalSpeed;
     }
 
 
@@ -219,13 +222,16 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        animator = animatedObject.GetComponent<Animator>();
-
         instance = this;
+        Debug.Log(this);
+
+        animator = animatedObject.GetComponent<Animator>();
 
         rigidBody2D = GetComponent<Rigidbody2D>();
 
         dash = GetComponent<PlayerDash>();
+
+        meleeAttack = GetComponent<MeleeAttack>();
 
         dash.InitBehaviourData();
     }

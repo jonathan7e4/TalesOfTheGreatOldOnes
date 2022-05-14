@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class AILifeSystem : MonoBehaviour
 {
-    public float maxHp = 20f;
+    public float maxHp = 1000f;
     public float hp;
-    // Start is called before the first frame update
+
     void Start()
     {
-        
+        hp = maxHp;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (hp <= 0) {

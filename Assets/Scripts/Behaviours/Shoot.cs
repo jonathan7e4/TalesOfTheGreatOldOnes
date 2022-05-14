@@ -17,11 +17,11 @@ public class Shoot : AIBehaviour
 
     bool CanShotToPlayer()
     {
-        Vector2 toPlayer = ( playerTransform.position - rb.transform.position ).normalized;
+        Vector2 toPlayer = ( playerTransform.position - transform.position ).normalized;
         Vector2 perp = PositionUtils.GetPerpendicular( toPlayer ) * projectile.GetComponent<CircleCollider2D>().radius;
 
-        bool firstCast = !Physics2D.Linecast( (Vector2) rb.transform.position + perp, (Vector2) playerTransform.position + perp, LayerMask.GetMask( "Obstacle" ) );
-        bool secondCast = !Physics2D.Linecast( (Vector2) rb.transform.position - perp, (Vector2) playerTransform.position - perp, LayerMask.GetMask( "Obstacle" ) );
+        bool firstCast = !Physics2D.Linecast( (Vector2) transform.position + perp, (Vector2) playerTransform.position + perp, LayerMask.GetMask( "Obstacle" ) );
+        bool secondCast = !Physics2D.Linecast( (Vector2) transform.position - perp, (Vector2) playerTransform.position - perp, LayerMask.GetMask( "Obstacle" ) );
 
         return firstCast && secondCast;
     }
@@ -64,8 +64,6 @@ public class Shoot : AIBehaviour
 
     public override void InitBehaviourData()
     {
-        playerTransform = PlayerController.instance.GetComponent<Transform>();
-
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -85,5 +83,10 @@ public class Shoot : AIBehaviour
     public override void UpdateBehaviour()
     {
         ShootLogicUpdate();
+    }
+
+    void Update()
+    {
+        if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.transform;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProyectileMovement : MonoBehaviour
 {
+    [HideInInspector]
     public float speed;
     public float directionRotationSpeed;
 
@@ -21,14 +22,20 @@ public class ProyectileMovement : MonoBehaviour
 
         proyectileToPlayer = player.position - rb.transform.position;
 
-        //rb.velocity = proyectileToPlayer.normalized * speed;
+        speed = PlayerController.instance.speed * 1.5f;
 
+        lifeSpan = speed / 2f;
     }
 
     
     // Update is called once per frame
     void Update()
     {
+        if (lifeSpan <= 0f)
+            Destroy(gameObject);
+
+        lifeSpan -= Time.deltaTime;
+
         return;
 
 #pragma warning disable CS0162
@@ -54,7 +61,6 @@ public class ProyectileMovement : MonoBehaviour
 
             rb.velocity = dir * speed;
         }
-        lifeSpan -= Time.deltaTime;
     }
 
 
