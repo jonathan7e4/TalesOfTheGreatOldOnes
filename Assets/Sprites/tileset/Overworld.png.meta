@@ -3224,6 +3224,9 @@ TextureImporter:
   - first:
       213: 5649468536085351866
     second: Overworld_1073
+  - first:
+      213: 7594525048525668793
+    second: Overworld_1074
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -3245,6 +3248,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -3276,9 +3280,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -25894,6 +25901,27 @@ TextureImporter:
       bones: []
       spriteID: abd0d1f83b1f66e40800000000000000
       internalID: 5649468536085351866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Overworld_1074
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 480
+        width: 48
+        height: 16
+      alignment: 9
+      pivot: {x: 0.49999985, y: 0.21928978}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b1cd2b4b4c256960800000000000000
+      internalID: 7594525048525668793
       vertices: []
       indices: 
       edges: []
