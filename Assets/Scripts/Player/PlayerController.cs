@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [ RequireComponent( typeof(PlayerDash) ) ]
@@ -11,24 +9,18 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
-    public GameObject animatedObject;
     public float speed = 4f;
-
-    Rigidbody2D rigidBody2D;
-    PlayerDash dash;
-    KeyboardStatus keyboardStatus = new KeyboardStatus();
-    Animator animator;
+    public enum state { Normal, Running, Dashing }
+    public state currentState = state.Normal;
+    public GameObject animatedObject;
 
     float currentSpeed = 0f;
     float acceleration = 200f;
+    KeyboardStatus keyboardStatus = new KeyboardStatus();
+    Rigidbody2D rigidBody2D;
+    PlayerDash dash;
+    Animator animator;
 
-    public enum state
-    {
-        Normal,
-        Running,
-        Dashing
-    }
-    public state currentState = state.Normal;
 
     public class KeyboardStatus
     {
@@ -36,9 +28,11 @@ public class PlayerController : MonoBehaviour
         public bool down;
         public bool left;
         public bool right;
+
         public bool keyPressed;
+
         public bool shift;
-        
+
         public bool attackingKey;
 
         public void SetKeyPressed()
@@ -52,46 +46,47 @@ public class PlayerController : MonoBehaviour
     {
         keyboardStatus.SetKeyPressed();
 
-        if (keyboardStatus.keyPressed)
+        if ( keyboardStatus.keyPressed )
         {
-            currentSpeed = Mathf.Min(speed, currentSpeed + acceleration * Time.deltaTime);
-            animator.SetFloat("Speed", 1);
+            currentSpeed = Mathf.Min( speed, currentSpeed + acceleration * Time.deltaTime );
+            animator.SetFloat( "Speed", 1 );
         }
         else
         {
             currentSpeed = 0f;
-            animator.SetFloat("Speed", 0);
+            animator.SetFloat( "Speed", 0 );
         }
     }
+
 
     public Vector2 GetPlayerDirection()
     {
         Vector2 playerDirection = Vector2.zero;
 
-        if (keyboardStatus.up)
+        if ( keyboardStatus.up )
         {
             playerDirection += Vector2.up;
-            animator.SetFloat("Vertical", 1);
-            animator.SetFloat("Horizontal", 0);
+            animator.SetFloat( "Vertical", 1 );
+            animator.SetFloat( "Horizontal", 0 );
         }
-        else if (keyboardStatus.down)
+        else if ( keyboardStatus.down )
         {
             playerDirection += Vector2.down;
-            animator.SetFloat("Vertical", -1);
-            animator.SetFloat("Horizontal", 0);
+            animator.SetFloat( "Vertical", -1 );
+            animator.SetFloat( "Horizontal", 0 );
         }
 
-        if (keyboardStatus.left)
+        if ( keyboardStatus.left )
         {
             playerDirection += Vector2.left;
-            animator.SetFloat("Horizontal", -1);
-            animator.SetFloat("Vertical", 0);
+            animator.SetFloat( "Horizontal", -1 );
+            animator.SetFloat( "Vertical", 0 );
         }
-        else if (keyboardStatus.right)
+        else if ( keyboardStatus.right )
         {
             playerDirection += Vector2.right;
-            animator.SetFloat("Horizontal", 1);
-            animator.SetFloat("Vertical", 0);
+            animator.SetFloat( "Horizontal", 1 );
+            animator.SetFloat( "Vertical", 0 );
         }
 
         playerDirection.Normalize();
@@ -102,81 +97,83 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 FacingDirection()
     {
-        float horizontal = animator.GetFloat("Horizontal");
-        float vertical = animator.GetFloat("Vertical");
+        float horizontal = animator.GetFloat( "Horizontal" );
+        float vertical = animator.GetFloat( "Vertical" );
 
-        return new Vector2(horizontal, vertical);
+        return new Vector2( horizontal, vertical );
     }
 
 
     void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.W)) {
-            keyboardStatus.up = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.W)) keyboardStatus.up = false;
+        if ( Input.GetKeyDown( KeyCode.W ) ) keyboardStatus.up = true;
+        else if ( Input.GetKeyUp( KeyCode.W ) ) keyboardStatus.up = false;
 
-        if (Input.GetKeyDown(KeyCode.S)) { 
-            keyboardStatus.down = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.S)) keyboardStatus.down = false;
+        if ( Input.GetKeyDown( KeyCode.S ) ) keyboardStatus.down = true;
+        else if ( Input.GetKeyUp( KeyCode.S ) ) keyboardStatus.down = false;
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            keyboardStatus.left = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.A)) keyboardStatus.left = false;
+        if ( Input.GetKeyDown( KeyCode.A ) ) keyboardStatus.left = true;
+        else if ( Input.GetKeyUp( KeyCode.A ) ) keyboardStatus.left = false;
 
-        if (Input.GetKeyDown(KeyCode.D)) { 
-                keyboardStatus.right = true;
-            }
-        else if (Input.GetKeyUp(KeyCode.D)) keyboardStatus.right = false;
+        if ( Input.GetKeyDown( KeyCode.D ) ) keyboardStatus.right = true;
+        else if ( Input.GetKeyUp( KeyCode.D ) ) keyboardStatus.right = false;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && currentState != state.Dashing)
+        if ( Input.GetKeyDown( KeyCode.LeftShift ) && currentState != state.Dashing )
         {
             keyboardStatus.shift = true;
-            if (StaminaSystem.instance.currentStamina > 10)
+            if ( StaminaSystem.instance.currentStamina > 10 )
             {
                 dash.StartBehaviour();
                 StaminaSystem.instance.currentStamina -= 15;
                 currentState = state.Dashing;
             }
-        } else if (Input.GetKeyUp(KeyCode.LeftShift)) {
-            keyboardStatus.shift = false;
         }
+        else if ( Input.GetKeyUp( KeyCode.LeftShift ) ) keyboardStatus.shift = false;
 
         if ( Input.GetKeyDown( KeyCode.Space ) ) keyboardStatus.attackingKey = true;
         else if ( Input.GetKeyUp( KeyCode.Space ) ) keyboardStatus.attackingKey = false;
     }
 
 
-    void Update()
+    private void OnCollisionEnter2D( Collision2D collision )
     {
-        HandleInput();
-
-        switch (currentState)
+        switch ( collision.gameObject.tag )
         {
-            case state.Normal:
-                NormalUpdate();
+            case "Obstacle":
+
+                currentState = state.Normal;
+
                 break;
-            case state.Running:
-                RunningUpdate();
-                break;
-            case state.Dashing:
-                dashingUpdate();
+
+            case "Enemy":
+
+                Destroy( gameObject );
+
                 break;
         }
     }
 
 
-    void Start()
+    void DashingUpdate()
     {
-        animator = animatedObject.GetComponent<Animator>();
-        instance = this;
-        rigidBody2D = GetComponent<Rigidbody2D>();
-        dash = GetComponent<PlayerDash>();
+        if ( !dash.dashing ) currentState = keyboardStatus.shift ? state.Running : state.Normal;
+    }
 
-        dash.InitBehaviourData();
+
+    void RunningUpdate()
+    {
+        if (keyboardStatus.shift && StaminaSystem.instance.currentStamina > 0f)
+        {
+            SetCurrentSpeed();
+
+            Vector2 playerDirection = GetPlayerDirection();
+
+            rigidBody2D.velocity = playerDirection * currentSpeed * 2f;
+
+            StaminaSystem.instance.currentStamina -= 20f * Time.deltaTime;
+
+        }
+        else currentState = state.Normal;
     }
 
 
@@ -193,40 +190,43 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void RunningUpdate()
+    void Update()
     {
-        if (keyboardStatus.shift && StaminaSystem.instance.currentStamina > 0f)
+        HandleInput();
+
+        switch ( currentState )
         {
-            SetCurrentSpeed();
+            case state.Normal:
 
-            Vector2 playerDirection = GetPlayerDirection();
+                NormalUpdate();
 
-            rigidBody2D.velocity = playerDirection * currentSpeed * 2f;
+                break;
 
-            StaminaSystem.instance.currentStamina -= 20f * Time.deltaTime;
+            case state.Running:
+
+                RunningUpdate();
+
+                break;
+
+            case state.Dashing:
+
+                DashingUpdate();
+
+                break;
         }
-        else
-            currentState = state.Normal;
     }
 
 
-    void dashingUpdate()
+    void Start()
     {
-        if (!dash.dashing)
-            currentState = keyboardStatus.shift ? state.Running : state.Normal;
-    }
+        animator = animatedObject.GetComponent<Animator>();
 
+        instance = this;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "Obstacle":
-                currentState = state.Normal;
-                break;
-            case "Enemy":
-                Destroy(gameObject);
-                break;
-        }
+        rigidBody2D = GetComponent<Rigidbody2D>();
+
+        dash = GetComponent<PlayerDash>();
+
+        dash.InitBehaviourData();
     }
 }

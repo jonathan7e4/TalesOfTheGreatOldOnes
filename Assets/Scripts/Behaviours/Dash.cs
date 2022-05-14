@@ -7,7 +7,7 @@ public class Dash : AIBehaviour
     public Transform playerTransform;
     public static Dash instance;
     Rigidbody2D rb;
-    Transform transform;
+    new Transform transform;
 
     public float dashDistance;
     public float dashSpeed;

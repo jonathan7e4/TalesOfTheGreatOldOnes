@@ -6,7 +6,7 @@ using UnityEngine;
 public class Shake : MonoBehaviour
 {
     public static Shake instance;
-    public Transform camera;
+    new public Transform camera;
 
 
     private void Awake()

@@ -31,7 +31,9 @@ public class ProyectileMovement : MonoBehaviour
     {
         return;
 
-        if(lifeSpan <= 0f){
+#pragma warning disable CS0162
+        if (lifeSpan <= 0f){
+#pragma warning restore CS0162
             Destroy(gameObject);
         }
         else{
