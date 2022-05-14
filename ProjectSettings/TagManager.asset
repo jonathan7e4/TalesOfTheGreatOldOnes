@@ -13,7 +13,7 @@ TagManager:
   - Obstacle
   - Water
   - UI
-  - Enemy
+  - 
   - 
   - 
   - 
@@ -51,4 +51,7 @@ TagManager:
     locked: 0
   - name: Bridge
     uniqueID: 1291577137
+    locked: 0
+  - name: UI
+    uniqueID: 3238007149
     locked: 0
