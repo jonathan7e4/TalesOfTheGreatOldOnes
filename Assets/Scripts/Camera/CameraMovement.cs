@@ -55,11 +55,8 @@ public class CameraMovement : MonoBehaviour
     
     void Update()
     {
-<<<<<<< HEAD
-=======
-        if ( playerTransform == null && PlayerController.instance != null )  playerTransform = PlayerController.instance.transform;
+        if ( playerTransform == null && PlayerController.instance != null ) playerTransform = PlayerController.instance.transform;
 
->>>>>>> origin/TilemapDevelopment
         //if ( Input.GetKeyUp( KeyCode.Space ) ) Shake.instance.ShakeIt();
         cameraToPlayer = playerTransform.position - transform.position;
 
@@ -73,11 +70,6 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-<<<<<<< HEAD
-        playerTransform = PlayerController.instance.transform;
-
-=======
->>>>>>> origin/TilemapDevelopment
         rigidBody2D = GetComponent<Rigidbody2D>();
     }
 }

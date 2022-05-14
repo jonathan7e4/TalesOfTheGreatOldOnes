@@ -3224,12 +3224,9 @@ TextureImporter:
   - first:
       213: 5649468536085351866
     second: Overworld_1073
-<<<<<<< HEAD
-=======
   - first:
       213: 7594525048525668793
     second: Overworld_1074
->>>>>>> origin/TilemapDevelopment
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -3251,10 +3248,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-<<<<<<< HEAD
-=======
   vTOnly: 0
->>>>>>> origin/TilemapDevelopment
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -3286,18 +3280,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-<<<<<<< HEAD
-  maxTextureSizeSet: 0
-  compressionQualitySet: 0
-  textureFormatSet: 0
-=======
   flipbookRows: 1
   flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
->>>>>>> origin/TilemapDevelopment
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -25917,8 +25905,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-<<<<<<< HEAD
-=======
     - serializedVersion: 2
       name: Overworld_1074
       rect:
@@ -25940,7 +25926,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
->>>>>>> origin/TilemapDevelopment
     outline: []
     physicsShape: []
     bones: []
