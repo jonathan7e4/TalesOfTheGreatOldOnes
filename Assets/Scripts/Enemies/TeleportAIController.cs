@@ -11,7 +11,6 @@ public class TeleportAIController : MonoBehaviour
 {
     public static TeleportAIController instance;
 
-    Rigidbody2D rb;
     Teleport teleport;
     Dash dash;
     Flank flank;
@@ -39,7 +38,6 @@ public class TeleportAIController : MonoBehaviour
     {
         instance = this;
 
-        rb = GetComponent<Rigidbody2D>();
         teleport = GetComponent<Teleport>();
         dash = GetComponent<Dash>();
         flank = GetComponent<Flank>();
@@ -129,9 +127,12 @@ public class TeleportAIController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player" && dash.dashing) {
+            PlayerController.instance.lifeSystem.TakeDamage(damage);
+
+            Shake.instance.ShakeIt();
+
             dash.dashing = false;
             dash.StopBehaviour();
-            //consecutiveAttacksCounter++;
         }
     }
 }

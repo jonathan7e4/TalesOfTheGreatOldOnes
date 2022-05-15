@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Teleport : AIBehaviour
 {
-    public Transform playerTransform;
+    Transform playerTransform;
     Transform iaTransform;
     Rigidbody2D rb;
     public float offset;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dash : AIBehaviour
 {
-    public Transform playerTransform;
+    Transform playerTransform;
     public static Dash instance;
     Rigidbody2D rb;
     Coroutine dashRoutine;

@@ -11,24 +11,30 @@ public class StaminaSystem : MonoBehaviour
     public float recovery = 5f;
 
     public float recoverCooldown = 1f;
-    public float recoverTimer;
+    public float recoverTimer = 1f;
 
     [HideInInspector]
-    public float staminaDebuff;
+    public float staminaDebuff = 1f;
+
+    public StaminaBar staminaBar;
 
     private void Start()
     {
-        currentStamina = maxStamina;
         instance = this;
-        staminaDebuff = 1f;
+
+        currentStamina = maxStamina;
+        staminaBar.SetMaxStamina(maxStamina);
     }
 
     private void Update()
     {
         if (PlayerController.instance.currentState == PlayerController.state.Normal)
         {
-            if (recoverTimer >= recoverCooldown)
+            if (recoverTimer >= recoverCooldown) 
+            {
                 currentStamina = Mathf.Min(maxStamina, currentStamina + recovery * Time.deltaTime);
+                staminaBar.setStamina(currentStamina);
+            }
             else
                 recoverTimer = Mathf.Min(recoverCooldown, recoverTimer + Time.deltaTime);
 
@@ -44,5 +50,10 @@ public class StaminaSystem : MonoBehaviour
 
         if (currentStamina == maxStamina)
             PlayerController.instance.exhausted = false;
+    }
+
+    public void loseStamina(float stamina) {
+        currentStamina -= stamina;
+        staminaBar.setStamina(currentStamina);
     }
 }

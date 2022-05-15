@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             keyboardStatus.shift = true;
             dash.StartBehaviour();
-            StaminaSystem.instance.currentStamina -= 10;
+            StaminaSystem.instance.loseStamina(10f);
             currentState = state.Dashing;
         }
         else if ( Input.GetKeyUp( KeyCode.LeftShift ) ) keyboardStatus.shift = false;
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             animator.SetBool("Attacking", true);
-            StaminaSystem.instance.currentStamina = Mathf.Max(0, StaminaSystem.instance.currentStamina - 5f);
+            StaminaSystem.instance.loseStamina(5f);
             meleeAttack.Attack();
         }
         else if (Input.GetKeyUp(KeyCode.Space)) animator.SetBool("Attacking", false);
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
             rigidBody2D.velocity = playerDirection * currentSpeed * 1.5f;
 
-            StaminaSystem.instance.currentStamina -= 10f * Time.deltaTime;
+            StaminaSystem.instance.loseStamina(10f * Time.deltaTime);
 
         }
         else currentState = state.Normal;

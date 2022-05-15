@@ -7,9 +7,12 @@ public class AILifeSystem : MonoBehaviour
     public float maxHp = 1000f;
     public float hp;
 
+    public HealthBar healthBar;
+
     void Start()
     {
-        hp = maxHp;
+        hp = maxHp;        
+        healthBar.SetMaxHealth(maxHp);
     }
 
     void Update()
@@ -23,11 +26,13 @@ public class AILifeSystem : MonoBehaviour
     {
         //Debug.Log("Me dieron");
         hp -= attackStrength;
+        healthBar.SetHealth(hp);
     }
 
     public void getHealed() {
         if (hp < maxHp) {
             hp = Mathf.Min(hp += maxHp / 5, maxHp);
+            healthBar.SetHealth(hp);
             //Debug.Log("Me curaron");
         }
     }
