@@ -44,11 +44,13 @@ public class Shoot : AIBehaviour
                 Vector3 playerPosition = playerTransform.position;
                 Vector2 playerVelocity = playerTransform.GetComponent<Rigidbody2D>().velocity;
                 Vector3 aiPosition = transform.position;
-                float projectileSpeed = this.projectile.GetComponent<ProyectileMovement>().speed;
+
+                float projectileSpeed = PlayerController.instance.speed * 2f;
+                Debug.Log(projectileSpeed);
 
                 var target = PositionUtils.GetPlayerPredictiveTarget( playerPosition, playerVelocity, aiPosition, projectileSpeed );
 
-                projectile.GetComponent<Rigidbody2D>().velocity = ( target - (Vector2) transform.position ).normalized * projectile.GetComponent<ProyectileMovement>().speed;
+                projectile.GetComponent<Rigidbody2D>().velocity = ( target - (Vector2) transform.position ).normalized * projectileSpeed;
 
                 shootReloadTime = 3f;
             }

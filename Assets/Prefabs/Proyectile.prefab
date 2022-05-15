@@ -118,10 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0feac781d6b136c4c8304262f895ca6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  directionRotationSpeed: 100
-  fieldView: 45
-  lifeSpan: 5
+  lifeSpan: 4
 --- !u!58 &6731779884191259753
 CircleCollider2D:
   m_ObjectHideFlags: 0

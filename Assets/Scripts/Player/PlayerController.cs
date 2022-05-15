@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
 
     public float speed = 4f;
+    public float runningSpeedMultiplier = 1.75f;
     public enum state { Normal, Running, Dashing }
     public state currentState = state.Normal;
     public GameObject animatedObject;
@@ -173,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
             Vector2 playerDirection = GetPlayerDirection();
 
-            rigidBody2D.velocity = playerDirection * currentSpeed * 2f;
+            rigidBody2D.velocity = playerDirection * currentSpeed * runningSpeedMultiplier;
 
             StaminaSystem.instance.currentStamina -= 10f * Time.deltaTime;
 
@@ -223,7 +224,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         instance = this;
-        Debug.Log(this);
 
         animator = animatedObject.GetComponent<Animator>();
 

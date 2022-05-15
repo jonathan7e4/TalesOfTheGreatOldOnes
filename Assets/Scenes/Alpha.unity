@@ -32715,7 +32715,7 @@ Tilemap:
       - {fileID: 2106211935483047706, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: -7916887993836798798, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 1601815475573090976, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -5, y: 26, z: 0}
@@ -32724,7 +32724,7 @@ Tilemap:
       - {fileID: 335437107707440903, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 5927350949019876849, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 4411076347858010225, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -4, y: 26, z: 0}
@@ -32823,7 +32823,7 @@ Tilemap:
       - {fileID: 8347172142051451383, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: -3009267081812509014, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 199302347679492142, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -1, y: 27, z: 0}
@@ -35467,7 +35467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1349182069
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -50422,7 +50422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1925631844
 SpriteRenderer:
   m_ObjectHideFlags: 0
