@@ -7,13 +7,11 @@ public class Dash : AIBehaviour
     public Transform playerTransform;
     public static Dash instance;
     Rigidbody2D rb;
-    new Transform transform;
-
-    public float dashDistance;
-    public float dashSpeed;
-    public float acceleration;
+    Coroutine dashRoutine;
 
     public float dashFactor;
+
+    public bool dashing = false;
 
     IEnumerator MakeDash(Vector2 direction, float distance, float speed, float acceleration)
     {
@@ -22,6 +20,7 @@ public class Dash : AIBehaviour
 
         rb.velocity = direction.normalized;
 
+        dashing = true;
         while (traveledDistance < distance)
         {
             var currentSpeed = rb.velocity.magnitude;
@@ -31,6 +30,7 @@ public class Dash : AIBehaviour
 
             var actualPosition = transform.position;
             traveledDistance = (actualPosition - initPosition).magnitude;
+
             yield return null;
         }
 
@@ -40,29 +40,37 @@ public class Dash : AIBehaviour
             var newSpeed = Mathf.Max(0f, currentSpeed - acceleration * 2f * Time.deltaTime);
 
             rb.velocity = rb.velocity.normalized * newSpeed;
+
             yield return null;
         }
+
+        dashing = false;
     }
 
     public override void InitBehaviourData()
     {
         rb = GetComponent<Rigidbody2D>();
-        transform = GetComponent<Transform>();
     }
 
     public override void StartBehaviour()
     {
         Vector2 toTarget = playerTransform.position - transform.position;
-        StartCoroutine(MakeDash(toTarget, 4f, 12f*dashFactor, 16f*dashFactor));
+        Debug.DrawLine(transform.position, playerTransform.position, Color.gray, 1f);
+        dashRoutine =  StartCoroutine(MakeDash(toTarget, 4f, 12f*dashFactor, 16f*dashFactor));
     }
 
     public override void StopBehaviour()
     {
-        
+        try { StopCoroutine(dashRoutine); } catch (System.NullReferenceException) { Debug.Log("Dash.cs: The coroutine was null"); };
     }
 
     public override void UpdateBehaviour()
     {
         
+    }
+
+    void Update()
+    {
+        if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.transform;
     }
 }

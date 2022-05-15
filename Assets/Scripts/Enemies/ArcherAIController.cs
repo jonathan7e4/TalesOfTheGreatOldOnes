@@ -12,6 +12,8 @@ public class ArcherAIController : MonoBehaviour
     Flank flank;
     Shoot shoot;
 
+    public float damage = 25;
+
 
     void Start()
     {

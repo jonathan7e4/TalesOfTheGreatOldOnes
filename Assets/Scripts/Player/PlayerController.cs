@@ -10,17 +10,19 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
 
     public float speed = 4f;
-    public float runningSpeedMultiplier = 1.75f;
     public enum state { Normal, Running, Dashing }
     public state currentState = state.Normal;
     public GameObject animatedObject;
 
     float currentSpeed = 0f;
     float acceleration = 200f;
+
     KeyboardStatus keyboardStatus = new KeyboardStatus();
     Rigidbody2D rigidBody2D;
     PlayerDash dash;
     MeleeAttack meleeAttack;
+    [HideInInspector]
+    public AILifeSystem lifeSystem;
     Animator animator;
 
     [HideInInspector]
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
             Vector2 playerDirection = GetPlayerDirection();
 
-            rigidBody2D.velocity = playerDirection * currentSpeed * runningSpeedMultiplier;
+            rigidBody2D.velocity = playerDirection * currentSpeed * 1.5f;
 
             StaminaSystem.instance.currentStamina -= 10f * Time.deltaTime;
 
@@ -232,6 +234,8 @@ public class PlayerController : MonoBehaviour
         dash = GetComponent<PlayerDash>();
 
         meleeAttack = GetComponent<MeleeAttack>();
+
+        lifeSystem = GetComponent<AILifeSystem>();
 
         dash.InitBehaviourData();
     }

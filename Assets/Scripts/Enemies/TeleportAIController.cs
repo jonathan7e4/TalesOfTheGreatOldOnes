@@ -16,10 +16,11 @@ public class TeleportAIController : MonoBehaviour
     Dash dash;
     Flank flank;
 
-    float attackCooldown;
+    public float damage = 30f;
+    public float attackCooldown = 2f;
     public float attackCooldownTimer;
 
-    int consecutiveAttacks;
+    public int consecutiveAttacks = 4;
     public int consecutiveAttacksCounter;
 
     [HideInInspector]
@@ -31,7 +32,7 @@ public class TeleportAIController : MonoBehaviour
         FollowingPlayer,
         Resting
     }
-    public State currentState = State.FollowingPlayer;
+    public State currentState = State.Resting;
 
 
     void Start()
@@ -76,7 +77,7 @@ public class TeleportAIController : MonoBehaviour
     {
         flank.UpdateBehaviour();
 
-        if (flank.distanceToPlayer.magnitude <= flank.maxDistToPlayer) {
+        if (attackCooldownTimer <= 0f) {
             flank.StopBehaviour();
 
             currentState = State.Resting;
@@ -88,7 +89,7 @@ public class TeleportAIController : MonoBehaviour
     void RestingUpdateLogic() {
         flank.UpdateDistanceToPlayer();
 
-        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
+        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer || flank.distanceToPlayer.magnitude < flank.minDistToPlayer)
         {
             currentState = State.FollowingPlayer;
         }
@@ -114,9 +115,9 @@ public class TeleportAIController : MonoBehaviour
 
     void DashingUpdateLogic()
     {
-        if (rb.velocity.magnitude == 0f)
+        if (!dash.dashing)
         {
-            if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
+            if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer || flank.distanceToPlayer.magnitude < flank.minDistToPlayer)
                 currentState = State.FollowingPlayer;
             else if (consecutiveAttacksCounter == 0)
                 currentState = State.Resting;
@@ -127,8 +128,10 @@ public class TeleportAIController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player") {
-            //rb.velocity = Vector2.zero;
+        if (collision.gameObject.name == "Player" && dash.dashing) {
+            dash.dashing = false;
+            dash.StopBehaviour();
+            //consecutiveAttacksCounter++;
         }
     }
 }

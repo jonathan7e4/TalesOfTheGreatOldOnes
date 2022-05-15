@@ -68,11 +68,16 @@ public class Teleport : AIBehaviour
 
     public override void StopBehaviour()
     {
-        
+
     }
 
     public override void UpdateBehaviour()
     {
         
+    }
+
+    void Update()
+    {
+        if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.transform;
     }
 }

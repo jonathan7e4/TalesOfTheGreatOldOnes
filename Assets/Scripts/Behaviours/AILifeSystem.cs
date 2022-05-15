@@ -21,14 +21,14 @@ public class AILifeSystem : MonoBehaviour
 
     public void TakeDamage(float attackStrength) 
     {
-        Debug.Log("Me dieron");
+        //Debug.Log("Me dieron");
         hp -= attackStrength;
     }
 
     public void getHealed() {
         if (hp < maxHp) {
             hp = Mathf.Min(hp += maxHp / 5, maxHp);
-            Debug.Log("Me curaron");
+            //Debug.Log("Me curaron");
         }
     }
 }

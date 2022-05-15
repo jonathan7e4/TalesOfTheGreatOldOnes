@@ -32715,7 +32715,7 @@ Tilemap:
       - {fileID: 2106211935483047706, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: -7916887993836798798, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 1601815475573090976, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -5, y: 26, z: 0}
@@ -35467,7 +35467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1349182069
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -35599,6 +35599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeCounterPostAttack: 0
   timeToAttackAgain: 3
+  damage: 40
 --- !u!114 &1349182075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50422,7 +50423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1925631844
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -50486,6 +50487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5036c6695cba3ca6891383a382327fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 25
 --- !u!50 &1925631846
 Rigidbody2D:
   serializedVersion: 4
@@ -50534,8 +50536,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootReloadTime: 0
-  minDistToPlayer: 4
-  maxDistToPlayer: 8
   projectile: {fileID: 4722853362569874870, guid: 0942f6f8ab63f4644b07144fd5dcd51e, type: 3}
   distanceToPlayer: {x: 0, y: 0}
 --- !u!114 &1925631849
@@ -50918,6 +50918,7 @@ GameObject:
   - component: {fileID: 1990508610}
   - component: {fileID: 1990508609}
   - component: {fileID: 1990508607}
+  - component: {fileID: 1990508612}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -50966,6 +50967,7 @@ MonoBehaviour:
   speed: 4
   currentState: 0
   animatedObject: {fileID: 143190765}
+  lifeSystem: {fileID: 0}
   exhausted: 0
 --- !u!50 &1990508608
 Rigidbody2D:
@@ -51033,6 +51035,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashing: 0
+--- !u!114 &1990508612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990508604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3bd13e0a6f8534eb4d5e43aeac8b7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  hp: 0
 --- !u!60 &1991425652 stripped
 PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 3371541342135034872, guid: 7ea645dacb0073f49bf2007f537e8aac, type: 3}

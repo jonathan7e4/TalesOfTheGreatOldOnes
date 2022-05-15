@@ -20,6 +20,8 @@ public class ZicZacAIController : MonoBehaviour
     Flank flank;
     ZicZac zicZac;
 
+    public float damage;
+
 
     void Start()
     {
@@ -83,6 +85,15 @@ public class ZicZacAIController : MonoBehaviour
                 DoZicZac();
 
                 break;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Player")
+        {
+            Shake.instance.ShakeIt();
+            PlayerController.instance.lifeSystem.TakeDamage(damage);
         }
     }
 }

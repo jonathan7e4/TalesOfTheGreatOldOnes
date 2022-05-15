@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Shoot : AIBehaviour
 {   // INITIAL DATA
-    Rigidbody2D rb;
     // PUBLIC ATTRIBUTES
     public float shootReloadTime;
-    public float minDistToPlayer = 4f;
-    public float maxDistToPlayer = 8f;
     public GameObject projectile;
     public Vector2 distanceToPlayer;
     // PRIVATE ATTRIBUTES
     Transform playerTransform;
+    ArcherAIController aiController;
 
 
     bool CanShotToPlayer()
@@ -46,11 +44,12 @@ public class Shoot : AIBehaviour
                 Vector3 aiPosition = transform.position;
 
                 float projectileSpeed = PlayerController.instance.speed * 2f;
-                Debug.Log(projectileSpeed);
 
                 var target = PositionUtils.GetPlayerPredictiveTarget( playerPosition, playerVelocity, aiPosition, projectileSpeed );
 
                 projectile.GetComponent<Rigidbody2D>().velocity = ( target - (Vector2) transform.position ).normalized * projectileSpeed;
+
+                projectile.GetComponent<ProyectileBehaviour>().damage = aiController.damage;
 
                 shootReloadTime = 3f;
             }
@@ -66,7 +65,7 @@ public class Shoot : AIBehaviour
 
     public override void InitBehaviourData()
     {
-        rb = GetComponent<Rigidbody2D>();
+        aiController = GetComponent<ArcherAIController>();
     }
 
 
