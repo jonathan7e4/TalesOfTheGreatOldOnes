@@ -22,6 +22,8 @@ public class TeleportAIController : MonoBehaviour
     public int consecutiveAttacks = 4;
     public int consecutiveAttacksCounter;
 
+    public bool bonked;
+
     [HideInInspector]
     public enum State
     {
@@ -75,7 +77,7 @@ public class TeleportAIController : MonoBehaviour
     {
         flank.UpdateBehaviour();
 
-        if (attackCooldownTimer <= 0f) {
+        if (attackCooldownTimer <= 0f && flank.onRange()) {
             flank.StopBehaviour();
 
             currentState = State.Resting;
@@ -87,12 +89,14 @@ public class TeleportAIController : MonoBehaviour
     void RestingUpdateLogic() {
         flank.UpdateDistanceToPlayer();
 
-        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer || flank.distanceToPlayer.magnitude < flank.minDistToPlayer)
+        if (!flank.onRange() && !bonked)
         {
             currentState = State.FollowingPlayer;
         }
         else if (attackCooldownTimer <= 0f)
         {
+            bonked = false;
+
             attackCooldownTimer = attackCooldown;
             consecutiveAttacksCounter = consecutiveAttacks;
             currentState = State.Attack;
@@ -119,13 +123,25 @@ public class TeleportAIController : MonoBehaviour
     {
         if (!dash.dashing)
         {
-            if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer || flank.distanceToPlayer.magnitude < flank.minDistToPlayer)
+            if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
                 currentState = State.FollowingPlayer;
             else if (consecutiveAttacksCounter == 0)
                 currentState = State.Resting;
             else
                 currentState = State.Attack;
         }
+    }
+
+    public void InterruptDash()
+    {
+        dash.StopBehaviour();
+
+        attackCooldownTimer = 0.5f;
+        consecutiveAttacksCounter = 0;
+
+        currentState = State.Resting;
+
+        bonked = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -140,13 +156,7 @@ public class TeleportAIController : MonoBehaviour
         }
 
         if (collision.gameObject.layer == 3 && dash.dashing) {
-            dash.dashing = false;
-            dash.StopBehaviour();
-
-            attackCooldownTimer = attackCooldown;
-            consecutiveAttacksCounter = 0;
-
-            currentState = State.Resting;
+            InterruptDash();
         }
     }
 }

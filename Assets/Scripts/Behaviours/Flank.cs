@@ -70,6 +70,10 @@ public class Flank : AIBehaviour
         return Vector2.Distance( transform.position, target ) < Vector2.Distance( transform.position, target2 ) ? target : target2;
     }
 
+    public bool onRange() {
+        return PositionUtils.AroundPlayer(distanceToPlayer, maxDistToPlayer, minDistToPlayer);
+    }
+
 
     Vector2 GetPositionToAvoidPlayer()
     {

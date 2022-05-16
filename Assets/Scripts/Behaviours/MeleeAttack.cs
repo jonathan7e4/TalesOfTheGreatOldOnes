@@ -11,6 +11,7 @@ public class MeleeAttack : MonoBehaviour
     public float attackDistance = 1f;
     PlayerController playerController;
     Vector2 attackDir;
+    public float thrust;
 
     void Start()
     {
@@ -42,7 +43,30 @@ public class MeleeAttack : MonoBehaviour
             {
                 Debug.DrawLine(playerPosition, enemyPosition, Color.red, 1f);
                 enemy.GetComponent<AILifeSystem>().TakeDamage(attack);
+
+                enemy.gameObject.GetComponent<Flank>().StopBehaviour();
+                if (enemy.gameObject.tag == "Teleport")
+                {
+                    enemy.gameObject.GetComponent<TeleportAIController>().InterruptDash();
+                }
+
+                Rigidbody2D enemyRb = enemy.GetComponent<Rigidbody2D>();
+                StartCoroutine(knockback(enemyRb));
             }
         }
+    }
+
+    private IEnumerator knockback(Rigidbody2D enemy)
+    {
+        Vector2 forceDirection = enemy.transform.position - transform.position;
+        Vector2 force = forceDirection.normalized * thrust;
+
+        enemy.velocity = force;
+
+        yield return new WaitForSeconds(0.1f);
+
+
+        enemy.velocity = new Vector2();
+
     }
 }

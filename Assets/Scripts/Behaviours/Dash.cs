@@ -60,7 +60,7 @@ public class Dash : AIBehaviour
 
     public override void StopBehaviour()
     {
-        try { StopCoroutine(dashRoutine); } catch (System.NullReferenceException) { Debug.Log("Dash.cs: The coroutine was null"); };
+        try { StopCoroutine(dashRoutine); dashing = false; } catch (System.NullReferenceException) { Debug.Log("Dash.cs: The coroutine was null"); };
     }
 
     public override void UpdateBehaviour()

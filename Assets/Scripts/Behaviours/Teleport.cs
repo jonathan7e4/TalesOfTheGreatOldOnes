@@ -14,7 +14,6 @@ public class Teleport : AIBehaviour
     {
         rb.velocity = Vector3.zero;
 
-        Vector3 playerPosition = playerTransform.position;
         Vector3 target = Vector3.zero;
 
         bool cast;
@@ -22,52 +21,42 @@ public class Teleport : AIBehaviour
 
         do
         {
-            var x = playerPosition.x;
-            var y = playerPosition.y;
+            var x = 0f;
+            var y = 0f;
 
             var dice = Random.Range(0, 4);
             switch (dice)
             {
                 case 0:
-                    x += offset;
+                    x = offset;
                     break;
 
                 case 1:
-                    x -= offset;
+                    x = offset;
                     break;
 
                 case 2:
-                    y += offset;
+                    y = offset;
                     break;
 
                 case 3:
-                    y -= offset;
+                    y = offset;
                     break;
             }
 
-            bool targetOutOfBounds = x >= 19 || x <= -19 || y >= 22.5 || y <= -22.5;
+            Vector3 playerPosition = playerTransform.position;
 
-            if (targetOutOfBounds)
-            {
-                cast = true;
-            }
-            else {
-                target = new Vector3(x, y, playerPosition.z);
+            target = new Vector2(x + playerPosition.x, y + playerPosition.y);
 
-                Vector2 targetToPlayer = playerPosition - target;
+            Vector2 targetToPlayer = playerPosition - target;
 
-                cast = Physics2D.CircleCast(target, GetComponent<CircleCollider2D>().radius, targetToPlayer, targetToPlayer.magnitude,  LayerMask.GetMask("Obstacle"));
-            }
+            bool targetOutOfBounds = target.x >= 18 || target.x <= -18 || target.y >= 22 || target.y <= -22;
+            cast = targetOutOfBounds || Physics2D.CircleCast(target, GetComponent<CircleCollider2D>().radius, targetToPlayer, targetToPlayer.magnitude,  LayerMask.GetMask("Obstacle"));
 
         } while (cast && i++<10);
 
-        if(target != Vector3.zero)
-        {
-            Debug.DrawLine(target, playerPosition, Color.green, 1f);
+        if(!cast)
             iaTransform.position = target;
-        }
-        else
-            Debug.DrawLine(target, playerPosition, Color.red, 1f);
 
         rb.velocity = Vector3.zero;
     }
