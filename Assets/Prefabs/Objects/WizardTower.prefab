@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 3146531171991566223}
   - component: {fileID: 3146531171991566224}
   - component: {fileID: 3146531171991566225}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WizardTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

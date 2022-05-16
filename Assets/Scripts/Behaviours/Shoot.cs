@@ -64,8 +64,6 @@ public class Shoot : AIBehaviour
 
     public override void InitBehaviourData()
     {
-        playerTransform = PlayerController.instance.GetComponent<Transform>();
-
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -84,6 +82,7 @@ public class Shoot : AIBehaviour
 
     public override void UpdateBehaviour()
     {
+        if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.transform;
         ShootLogicUpdate();
     }
 }

@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 7610894309984442034}
   - component: {fileID: 7610894309984442035}
   - component: {fileID: 7610894309984442032}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BrokenLog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
