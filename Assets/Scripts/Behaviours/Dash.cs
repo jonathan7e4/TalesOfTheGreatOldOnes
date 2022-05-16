@@ -55,7 +55,6 @@ public class Dash : AIBehaviour
     public override void StartBehaviour()
     {
         Vector2 toTarget = playerTransform.position - transform.position;
-        Debug.DrawLine(transform.position, playerTransform.position, Color.gray, 1f);
         dashRoutine =  StartCoroutine(MakeDash(toTarget, 4f, 12f*dashFactor, 16f*dashFactor));
     }
 

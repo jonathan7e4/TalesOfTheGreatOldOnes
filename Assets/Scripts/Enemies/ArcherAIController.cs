@@ -14,6 +14,9 @@ public class ArcherAIController : MonoBehaviour
 
     public float damage = 25;
 
+    public float reloadTime = 3f;
+    public float reloadtTimeCounter;
+
 
     void Start()
     {

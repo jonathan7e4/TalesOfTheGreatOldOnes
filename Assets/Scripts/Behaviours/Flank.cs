@@ -257,6 +257,11 @@ public class Flank : AIBehaviour
         if ( !PositionUtils.AroundPlayer( distanceToPlayer, maxDistToPlayer, minDistToPlayer ) ) FollowPlayerLogicUpdate();
     }
 
+    private void Start()
+    {
+        playerTransform = FindObjectOfType<PlayerController>().transform;
+    }
+
     void Update()
     {
         if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.transform;

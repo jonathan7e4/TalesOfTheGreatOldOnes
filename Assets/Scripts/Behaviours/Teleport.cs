@@ -15,10 +15,11 @@ public class Teleport : AIBehaviour
         rb.velocity = Vector3.zero;
 
         Vector3 playerPosition = playerTransform.position;
-        Vector3 target;
+        Vector3 target = Vector3.zero;
 
         bool cast;
         int i=0;
+
         do
         {
             var x = playerPosition.x;
@@ -43,14 +44,31 @@ public class Teleport : AIBehaviour
                     y -= offset;
                     break;
             }
-            
-            target = new Vector3(x, y, playerPosition.z);
 
-            cast = Physics2D.OverlapCircle(target, GetComponent<CircleCollider2D>().radius, LayerMask.GetMask("Obstacle"));
+            bool targetOutOfBounds = x >= 19 || x <= -19 || y >= 22.5 || y <= -22.5;
+
+            if (targetOutOfBounds)
+            {
+                cast = true;
+            }
+            else {
+                target = new Vector3(x, y, playerPosition.z);
+
+                Vector2 targetToPlayer = playerPosition - target;
+
+                cast = Physics2D.CircleCast(target, GetComponent<CircleCollider2D>().radius, targetToPlayer, targetToPlayer.magnitude,  LayerMask.GetMask("Obstacle"));
+            }
 
         } while (cast && i++<10);
 
-        iaTransform.position = target;
+        if(target != Vector3.zero)
+        {
+            Debug.DrawLine(target, playerPosition, Color.green, 1f);
+            iaTransform.position = target;
+        }
+        else
+            Debug.DrawLine(target, playerPosition, Color.red, 1f);
+
         rb.velocity = Vector3.zero;
     }
 

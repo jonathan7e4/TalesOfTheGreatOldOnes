@@ -105,8 +105,12 @@ public class TeleportAIController : MonoBehaviour
     {
         consecutiveAttacksCounter--;
 
+        Vector2 initialPosition = transform.position;
+
         teleport.StartBehaviour();
-        dash.StartBehaviour();
+
+        if ((Vector2)transform.position != initialPosition)
+            dash.StartBehaviour();
 
         currentState = State.Dashing;
     }
@@ -133,6 +137,16 @@ public class TeleportAIController : MonoBehaviour
 
             dash.dashing = false;
             dash.StopBehaviour();
+        }
+
+        if (collision.gameObject.layer == 3 && dash.dashing) {
+            dash.dashing = false;
+            dash.StopBehaviour();
+
+            attackCooldownTimer = attackCooldown;
+            consecutiveAttacksCounter = 0;
+
+            currentState = State.Resting;
         }
     }
 }

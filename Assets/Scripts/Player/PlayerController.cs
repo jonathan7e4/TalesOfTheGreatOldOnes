@@ -223,9 +223,14 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Start()
+    private void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+       
 
         animator = animatedObject.GetComponent<Animator>();
 

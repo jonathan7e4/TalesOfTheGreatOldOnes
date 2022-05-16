@@ -23961,6 +23961,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 430169754408271251, guid: b697293d7c17b484c856f4adcb0fe37a, type: 3}
+      propertyPath: shootReloadTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 430169754408271256, guid: b697293d7c17b484c856f4adcb0fe37a, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -33223,7 +33227,7 @@ Tilemap:
       - {fileID: 335437107707440903, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 5927350949019876849, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 4411076347858010225, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -4, y: 26, z: 0}
@@ -33340,7 +33344,7 @@ Tilemap:
       - {fileID: 8347172142051451383, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: -3009267081812509014, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
       - {fileID: 199302347679492142, guid: 139676bf3b670a34fb4c0605f17b2f1c, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 1, y: 27, z: 0}
