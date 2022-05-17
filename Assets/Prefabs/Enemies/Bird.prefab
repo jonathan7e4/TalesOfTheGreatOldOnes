@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 3865074432832715558}
   - component: {fileID: 3865074432832715556}
   m_Layer: 6
-  m_Name: Hedgehog
+  m_Name: Bird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
