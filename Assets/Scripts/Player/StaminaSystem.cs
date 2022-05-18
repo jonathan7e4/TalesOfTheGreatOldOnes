@@ -28,7 +28,7 @@ public class StaminaSystem : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerController.instance.currentState == PlayerController.state.Normal)
+        if (PlayerController.instance.currentState == PlayerController.state.Normal && PlayerController.instance.animator.GetBool("Attacking"))
         {
             if (recoverTimer >= recoverCooldown) 
             {

@@ -15,8 +15,10 @@ public class BirdAIController : MonoBehaviour
     public float preAttackTime = 0f;
     public float waitingTime;
 
-    enum State { DoingFlank, StartingAttack, DoingZicZac }
-    State currentState = State.DoingFlank;
+    [HideInInspector]
+    public enum State { DoingFlank, StartingAttack, DoingZicZac }
+
+    public State currentState = State.StartingAttack;
 
     public GameObject animatedObject;
 

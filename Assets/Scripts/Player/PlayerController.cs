@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     MeleeAttack meleeAttack;
     [HideInInspector]
     public AILifeSystem lifeSystem;
-    Animator animator;
+    [HideInInspector]
+    public Animator animator;
 
     [HideInInspector]
     public bool exhausted = false;
