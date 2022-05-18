@@ -23,11 +23,15 @@ public class Shake : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+            if(Time.timeScale != 0)
+            {
+                float x = Random.Range(-1f, 1f) * magnitude;
+                float y = Random.Range(-1f, 1f) * magnitude;
 
-            camera.transform.localPosition = new Vector3(x, y, originalPosition.z);
-            elapsedTime += Time.deltaTime;
+                camera.transform.localPosition = new Vector3(x, y, originalPosition.z);
+                elapsedTime += Time.deltaTime;
+            }
+
             yield return null;
         }
 

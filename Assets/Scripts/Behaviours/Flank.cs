@@ -150,7 +150,8 @@ public class Flank : AIBehaviour
 
     public void UpdateDistanceToPlayer()
     {
-        distanceToPlayer = playerTransform.position - transform.position;
+        if(Time.timeScale != 0)
+            distanceToPlayer = playerTransform.position - transform.position;
     }
 
 

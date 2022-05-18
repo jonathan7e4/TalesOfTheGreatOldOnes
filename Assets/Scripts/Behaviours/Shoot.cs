@@ -64,7 +64,8 @@ public class Shoot : AIBehaviour
 
     public void UpdateDistanceToPlayer()
     {
-        distanceToPlayer = playerTransform.position - transform.position;
+        if (Time.timeScale != 0)
+            distanceToPlayer = playerTransform.position - transform.position;
     }
 
 
@@ -89,7 +90,8 @@ public class Shoot : AIBehaviour
 
     public override void UpdateBehaviour()
     {
-        ShootLogicUpdate();
+        if (Time.timeScale != 0)
+            ShootLogicUpdate();
     }
 
     void Update()

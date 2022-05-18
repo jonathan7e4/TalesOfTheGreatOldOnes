@@ -57,14 +57,16 @@ public class CameraMovement : MonoBehaviour
     {
         if ( playerTransform == null && PlayerController.instance != null ) playerTransform = PlayerController.instance.transform;
 
-        //if ( Input.GetKeyUp( KeyCode.Space ) ) Shake.instance.ShakeIt();
-        cameraToPlayer = playerTransform.position - transform.position;
+        if (Time.timeScale != 0)
+        {
+            cameraToPlayer = playerTransform.position - transform.position;
 
-        // FOLLOWS THE PLAYER LEAVING SOME DISTANCE RELATIVE TO THE LIMITS DEFINED.
-        FollowAroundPlayer( cameraToPlayer );
+            // FOLLOWS THE PLAYER LEAVING SOME DISTANCE RELATIVE TO THE LIMITS DEFINED.
+            FollowAroundPlayer(cameraToPlayer);
 
-        // DRAWS A LINE FROM THE POSITIONS THAT THE CAMERA FOLLOWS THE PLAYER. FOR DEBUGGING PURPOSES.
-        DrawRedDiagonalLine();
+            // DRAWS A LINE FROM THE POSITIONS THAT THE CAMERA FOLLOWS THE PLAYER. FOR DEBUGGING PURPOSES.
+            DrawRedDiagonalLine();
+        }
     }
 
 

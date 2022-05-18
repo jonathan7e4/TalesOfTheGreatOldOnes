@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         keyboardStatus.SetKeyPressed();
 
-        if ( keyboardStatus.keyPressed )
+        if ( keyboardStatus.keyPressed)
         {
             currentSpeed = Mathf.Min( speed, currentSpeed + acceleration * Time.deltaTime );
             animator.SetFloat( "Speed", 1 );
@@ -69,34 +69,36 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetPlayerDirection()
     {
         Vector2 playerDirection = Vector2.zero;
+        if (!CanvasController.instance.GamePaused())
+        {
+            if (keyboardStatus.up)
+            {
+                playerDirection += Vector2.up;
+                animator.SetFloat("Vertical", 1);
+                animator.SetFloat("Horizontal", 0);
+            }
+            else if (keyboardStatus.down)
+            {
+                playerDirection += Vector2.down;
+                animator.SetFloat("Vertical", -1);
+                animator.SetFloat("Horizontal", 0);
+            }
 
-        if ( keyboardStatus.up )
-        {
-            playerDirection += Vector2.up;
-            animator.SetFloat( "Vertical", 1 );
-            animator.SetFloat( "Horizontal", 0 );
-        }
-        else if ( keyboardStatus.down )
-        {
-            playerDirection += Vector2.down;
-            animator.SetFloat( "Vertical", -1 );
-            animator.SetFloat( "Horizontal", 0 );
-        }
+            if (keyboardStatus.left)
+            {
+                playerDirection += Vector2.left;
+                animator.SetFloat("Horizontal", -1);
+                animator.SetFloat("Vertical", 0);
+            }
+            else if (keyboardStatus.right)
+            {
+                playerDirection += Vector2.right;
+                animator.SetFloat("Horizontal", 1);
+                animator.SetFloat("Vertical", 0);
+            }
 
-        if ( keyboardStatus.left )
-        {
-            playerDirection += Vector2.left;
-            animator.SetFloat( "Horizontal", -1 );
-            animator.SetFloat( "Vertical", 0 );
+            playerDirection.Normalize();
         }
-        else if ( keyboardStatus.right )
-        {
-            playerDirection += Vector2.right;
-            animator.SetFloat( "Horizontal", 1 );
-            animator.SetFloat( "Vertical", 0 );
-        }
-
-        playerDirection.Normalize();
 
         return playerDirection;
     }
@@ -242,5 +244,10 @@ public class PlayerController : MonoBehaviour
         lifeSystem = GetComponent<AILifeSystem>();
 
         dash.InitBehaviourData();
+    }
+
+    private void OnDestroy()
+    {
+        CanvasController.instance.EndGame();
     }
 }
