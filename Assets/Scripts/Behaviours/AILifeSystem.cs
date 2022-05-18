@@ -22,6 +22,10 @@ public class AILifeSystem : MonoBehaviour
         }
     }
 
+    public bool HasFullHp() {
+        return hp == maxHp;
+    }
+
     public void TakeDamage(float attackStrength) 
     {
         //Debug.Log("Me dieron");
@@ -29,11 +33,9 @@ public class AILifeSystem : MonoBehaviour
         healthBar.SetHealth(hp);
     }
 
-    public void getHealed() {
-        if (hp < maxHp) {
-            hp = Mathf.Min(hp += maxHp / 5, maxHp);
-            healthBar.SetHealth(hp);
-            //Debug.Log("Me curaron");
-        }
+    public void GetHealed(float healPower) {
+        hp = Mathf.Min(maxHp, hp + healPower);
+        healthBar.SetHealth(hp);
+        //Debug.Log("Me curaron");
     }
 }

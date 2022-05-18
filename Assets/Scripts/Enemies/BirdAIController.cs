@@ -18,13 +18,15 @@ public class BirdAIController : MonoBehaviour
     enum State { DoingFlank, StartingAttack, DoingZicZac }
     State currentState = State.DoingFlank;
 
+    public GameObject animatedObject;
+
     Rigidbody2D rb;
     Animator animator;
 
+    Transform playerTransform;
+
     Flank flank;
     ZicZac zicZac;
-
-    Transform playerTransform;
 
     public float damage;
 
@@ -33,6 +35,7 @@ public class BirdAIController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerTransform = FindObjectOfType<PlayerController>().transform;
 
 
         flank = GetComponent<Flank>();
@@ -46,19 +49,23 @@ public class BirdAIController : MonoBehaviour
         flank.StartBehaviour();
     }
 
-    float time = 0f;
+
+     private void OnCollisionEnter2D( Collision2D collision )
+    {
+        if ( collision.collider.tag == "Player" )
+        {
+            Shake.instance.ShakeIt();
+            PlayerController.instance.lifeSystem.TakeDamage( damage );
+        }
+    }
+
 
     private void DoZicZac()
     {
-        
-        time += Time.deltaTime;
-        Debug.Log( "ZIC ZAC TIME = " + time );
         zicZac.UpdateBehaviour();
 
         if ( zicZac.Finished() )
         {
-            time = 0;
-            Debug.Log( "ZIC ZAC FINISHED" );
             timeToAttackAgain = Random.Range( MIN_TIME_TO_ATTACK_AGAIN, MAX_TIME_TO_ATTACK_AGAIN );
             timeCounterPostAttack = 0f;
 
@@ -109,7 +116,11 @@ public class BirdAIController : MonoBehaviour
         float verticalVelocity = rb.velocity.y;
 
         if ( horizontalVelocity != 0 || verticalVelocity != 0 ) animator.SetFloat( "Speed", 1 );
-        else animator.SetFloat( "Speed", 0 );
+        else
+        {
+            animator.SetFloat( "Speed", 0 );
+            UpdateIdleAnimation();
+        }
 
         if ( horizontalVelocity > 0 )
         {
@@ -152,11 +163,10 @@ public class BirdAIController : MonoBehaviour
 
     void Update()
     {
-        if ( playerTransform == null && PlayerController.instance != null ) playerTransform = PlayerController.instance.transform;
+        if ( animator == null ) animator = animatedObject.GetComponent<Animator>();
 
-        UpdateAnimator();
-        UpdateIdleAnimation();
-
+        if ( animator != null ) UpdateAnimator();
+        
         flank.UpdateDistanceToPlayer();
 
         switch ( currentState )
@@ -178,16 +188,6 @@ public class BirdAIController : MonoBehaviour
                 DoZicZac();
 
                 break;
-        }
-    }
-
-
-    private void OnCollisionEnter2D( Collision2D collision )
-    {
-        if ( collision.collider.tag == "Player" )
-        {
-            Shake.instance.ShakeIt();
-            PlayerController.instance.lifeSystem.TakeDamage( damage );
         }
     }
 }

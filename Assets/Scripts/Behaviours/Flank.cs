@@ -14,11 +14,11 @@ public class Flank : AIBehaviour
     public float speed = 3f;
     public float minDistToPlayer = 4f;
     public float maxDistToPlayer = 8f;
-    public Transform playerTransform;
     public Vector2 distanceToPlayer;
-    // PRIVATE ATTRIBUTES
     public bool lookingAPath = false;
     public bool followingPath;
+    // PRIVATE ATTRIBUTES
+    Transform playerTransform;
     float timeFollowingPathCount;
     Vector2 lastPathNodePos;
 
@@ -68,6 +68,10 @@ public class Flank : AIBehaviour
         if ( !cast1 && cast2 ) return target;
 
         return Vector2.Distance( transform.position, target ) < Vector2.Distance( transform.position, target2 ) ? target : target2;
+    }
+
+    public bool onRange() {
+        return PositionUtils.AroundPlayer(distanceToPlayer, maxDistToPlayer, minDistToPlayer);
     }
 
 
@@ -241,6 +245,8 @@ public class Flank : AIBehaviour
 
     public override void StartBehaviour()
     {
+        playerTransform = FindObjectOfType<PlayerController>().transform;
+
         FollowPlayerLogicUpdate();
     }
 
@@ -256,6 +262,7 @@ public class Flank : AIBehaviour
     {
         if ( !PositionUtils.AroundPlayer( distanceToPlayer, maxDistToPlayer, minDistToPlayer ) ) FollowPlayerLogicUpdate();
     }
+
 
     void Update()
     {

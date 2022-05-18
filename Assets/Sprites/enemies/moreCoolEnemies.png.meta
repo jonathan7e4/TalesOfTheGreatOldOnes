@@ -38,6 +38,42 @@ TextureImporter:
   - first:
       213: 1589937592335494750
     second: moreCoolEnemies_11
+  - first:
+      213: -6807020797519160428
+    second: moreCoolEnemies_12
+  - first:
+      213: 5206995610892681743
+    second: moreCoolEnemies_13
+  - first:
+      213: 923108473560926539
+    second: moreCoolEnemies_14
+  - first:
+      213: 7069394967130924410
+    second: moreCoolEnemies_15
+  - first:
+      213: 8735498588629045704
+    second: moreCoolEnemies_16
+  - first:
+      213: -4536073229626060633
+    second: moreCoolEnemies_17
+  - first:
+      213: -5151797208909344365
+    second: moreCoolEnemies_18
+  - first:
+      213: 3666776763836127223
+    second: moreCoolEnemies_19
+  - first:
+      213: -8857085611512486309
+    second: moreCoolEnemies_20
+  - first:
+      213: -5656505737663968738
+    second: moreCoolEnemies_21
+  - first:
+      213: 2488705231837025310
+    second: moreCoolEnemies_22
+  - first:
+      213: 5162126805444308872
+    second: moreCoolEnemies_23
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -386,6 +422,258 @@ TextureImporter:
       bones: []
       spriteID: e5e623ef0d7901610800000000000000
       internalID: 1589937592335494750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_12
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 160
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49b9c2956aa9881a0800000000000000
+      internalID: -6807020797519160428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_13
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f02c6469be6f24840800000000000000
+      internalID: 5206995610892681743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_14
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 160
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4980cf044a8fcc00800000000000000
+      internalID: 923108473560926539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_15
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 128
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a75e5c074498b1260800000000000000
+      internalID: 7069394967130924410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_16
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 128
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c119270fa9ba3970800000000000000
+      internalID: 8735498588629045704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_17
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 128
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a0daf84e61ac01c0800000000000000
+      internalID: -4536073229626060633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_18
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 96
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3911c10ebb32188b0800000000000000
+      internalID: -5151797208909344365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_19
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 96
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f7db1f0a0203e230800000000000000
+      internalID: 3666776763836127223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_20
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 96
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b56239c209f451580800000000000000
+      internalID: -8857085611512486309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_21
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 64
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1a8494400e0081b0800000000000000
+      internalID: -5656505737663968738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_22
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e145d4ef838a98220800000000000000
+      internalID: 2488705231837025310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: moreCoolEnemies_23
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 64
+        width: 16
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.18}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88fa70cbafe83a740800000000000000
+      internalID: 5162126805444308872
       vertices: []
       indices: 
       edges: []

@@ -1,12 +1,15 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Teleport))]
-[RequireComponent(typeof(Dash))]
-[RequireComponent(typeof(Flank))]
+[ RequireComponent( typeof(Teleport) ) ]
+[ RequireComponent( typeof(Dash) ) ]
+[ RequireComponent( typeof(Flank) ) ]
+
 
 public class SkullAIController : MonoBehaviour
 {
     public static SkullAIController instance;
+
+    public GameObject animatedObject;
 
     Animator animator;
     Transform playerTransform;
@@ -20,6 +23,8 @@ public class SkullAIController : MonoBehaviour
 
     public int consecutiveAttacks = 4;
     public int consecutiveAttacksCounter;
+
+    public bool bonked;
 
     [HideInInspector]
     public enum State
@@ -50,8 +55,11 @@ public class SkullAIController : MonoBehaviour
         consecutiveAttacksCounter = consecutiveAttacks;
     }
 
+
     void Update()
     {
+        if ( animator == null ) animator = animatedObject.GetComponent<Animator>();
+
         if ( playerTransform == null && PlayerController.instance != null ) playerTransform = PlayerController.instance.transform;
 
         switch (currentState)
@@ -73,13 +81,14 @@ public class SkullAIController : MonoBehaviour
         }
     }
 
+
     private void FollowPlayer()
     {
         UpdateIdleAnimation();
 
         flank.UpdateBehaviour();
 
-        if (attackCooldownTimer <= 0f) {
+        if (attackCooldownTimer <= 0f && flank.onRange()) {
             flank.StopBehaviour();
 
             currentState = State.Resting;
@@ -88,18 +97,21 @@ public class SkullAIController : MonoBehaviour
             attackCooldownTimer -= Time.deltaTime;
     }
 
+
     void RestingUpdateLogic()
     {
         UpdateIdleAnimation();
 
         flank.UpdateDistanceToPlayer();
 
-        if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer || flank.distanceToPlayer.magnitude < flank.minDistToPlayer)
+        if (!flank.onRange() && !bonked)
         {
             currentState = State.FollowingPlayer;
         }
         else if (attackCooldownTimer <= 0f)
         {
+            bonked = false;
+
             attackCooldownTimer = attackCooldown;
             consecutiveAttacksCounter = consecutiveAttacks;
             currentState = State.Attack;
@@ -113,17 +125,17 @@ public class SkullAIController : MonoBehaviour
     {
         Vector2 enemyToPlayer = playerTransform.position - transform.position;
 
-        if ( Mathf.Abs( enemyToPlayer.x ) > Mathf.Abs( enemyToPlayer.y ) )
+        if (Mathf.Abs(enemyToPlayer.x) > Mathf.Abs(enemyToPlayer.y))
         {
-            if ( enemyToPlayer.x > 0 ) animator.SetFloat( "Horizontal", 1 );
-            else animator.SetFloat( "Horizontal", -1 );
-            animator.SetFloat( "Vertical", 0 );
+            if (enemyToPlayer.x > 0) animator.SetFloat("Horizontal", 1);
+            else animator.SetFloat("Horizontal", -1);
+            animator.SetFloat("Vertical", 0);
         }
         else
         {
-            if ( enemyToPlayer.y > 0 ) animator.SetFloat( "Vertical", 1 );
-            else animator.SetFloat( "Vertical", -1 );
-            animator.SetFloat( "Horizontal", 0 );
+            if (enemyToPlayer.y > 0) animator.SetFloat("Vertical", 1);
+            else animator.SetFloat("Vertical", -1);
+            animator.SetFloat("Horizontal", 0);
         }
     }
 
@@ -132,14 +144,18 @@ public class SkullAIController : MonoBehaviour
     {
         consecutiveAttacksCounter--;
 
+        Vector2 initialPosition = transform.position;
+
         teleport.StartBehaviour();
 
         UpdateIdleAnimation();
 
-        dash.StartBehaviour();
+        if ((Vector2)transform.position != initialPosition)
+            dash.StartBehaviour();
 
         currentState = State.Dashing;
     }
+
 
     void DashingUpdateLogic()
     {
@@ -147,7 +163,7 @@ public class SkullAIController : MonoBehaviour
         {
             UpdateIdleAnimation();
 
-            if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer || flank.distanceToPlayer.magnitude < flank.minDistToPlayer)
+            if (flank.distanceToPlayer.magnitude > flank.maxDistToPlayer)
                 currentState = State.FollowingPlayer;
             else if (consecutiveAttacksCounter == 0)
                 currentState = State.Resting;
@@ -155,6 +171,20 @@ public class SkullAIController : MonoBehaviour
                 currentState = State.Attack;
         }
     }
+
+
+    public void InterruptDash()
+    {
+        dash.StopBehaviour();
+
+        attackCooldownTimer = 0.5f;
+        consecutiveAttacksCounter = 0;
+
+        currentState = State.Resting;
+
+        bonked = true;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -165,6 +195,10 @@ public class SkullAIController : MonoBehaviour
 
             dash.dashing = false;
             dash.StopBehaviour();
+        }
+
+        if (collision.gameObject.layer == 3 && dash.dashing) {
+            InterruptDash();
         }
     }
 }

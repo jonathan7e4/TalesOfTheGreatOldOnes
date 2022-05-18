@@ -6,11 +6,13 @@ public class Shoot : AIBehaviour
 {   // INITIAL DATA
     // PUBLIC ATTRIBUTES
     public float shootReloadTime;
+    public float animationTime;
+    public float maximumAnimationTime;
     public GameObject projectile;
     public Vector2 distanceToPlayer;
     // PRIVATE ATTRIBUTES
     Transform playerTransform;
-    ArcherAIController aiController;
+    float damage;
 
 
     bool CanShotToPlayer()
@@ -29,15 +31,14 @@ public class Shoot : AIBehaviour
     {
         UpdateDistanceToPlayer();
 
-        shootReloadTime -= Time.deltaTime;
-
-        if ( CanShotToPlayer() )
+        if ( CanShotToPlayer() && shootReloadTime <= 0f)
         {
-            if ( shootReloadTime <= 0 )
+            
+            if ( animationTime >= maximumAnimationTime )
             {
                 var toPlayer = distanceToPlayer.normalized;
 
-                var projectile = Instantiate( this.projectile, (Vector2) transform.position + toPlayer * 1f, Quaternion.identity );
+                var projectile = Instantiate(this.projectile, (Vector2)transform.position + toPlayer * 1f, Quaternion.identity);
 
                 Vector3 playerPosition = playerTransform.position;
                 Vector2 playerVelocity = playerTransform.GetComponent<Rigidbody2D>().velocity;
@@ -45,15 +46,19 @@ public class Shoot : AIBehaviour
 
                 float projectileSpeed = PlayerController.instance.speed * 2f;
 
-                var target = PositionUtils.GetPlayerPredictiveTarget( playerPosition, playerVelocity, aiPosition, projectileSpeed );
+                var target = PositionUtils.GetPlayerPredictiveTarget(playerPosition, playerVelocity, aiPosition, projectileSpeed);
 
-                projectile.GetComponent<Rigidbody2D>().velocity = ( target - (Vector2) transform.position ).normalized * projectileSpeed;
+                projectile.GetComponent<Rigidbody2D>().velocity = (target - (Vector2)transform.position).normalized * projectileSpeed;
 
-                projectile.GetComponent<ProyectileBehaviour>().damage = aiController.damage;
+                projectile.GetComponent<ProyectileBehaviour>().damage = damage;
 
                 shootReloadTime = 3f;
+                animationTime = 0f;
             }
+            else animationTime += Time.deltaTime;
         }
+
+        shootReloadTime -= Time.deltaTime;
     }
 
 
@@ -65,7 +70,8 @@ public class Shoot : AIBehaviour
 
     public override void InitBehaviourData()
     {
-        aiController = GetComponent<ArcherAIController>();
+        damage = GetComponent<SlimeAIController>().damage;
+        animationTime = 0f;
     }
 
 
