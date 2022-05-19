@@ -61,7 +61,7 @@ public class MeleeAttack : MonoBehaviour
         Vector2 forceDirection = enemy.transform.position - transform.position;
         Vector2 force = forceDirection.normalized * thrust;
 
-        enemy.velocity = force;
+        enemy.velocity += force;
 
         yield return new WaitForSeconds(0.1f);
 

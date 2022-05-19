@@ -86,9 +86,6 @@ public class ZicZac : AIBehaviour
 
             GetComponent<Rigidbody2D>().velocity = meToTarget * speed;
 
-            Debug.Log("To Target : " + Vector2.Distance(transform.position, targets[currentTargetIndex]));
-            Debug.Log("Reach : " + GetComponent<CircleCollider2D>().radius * transform.localScale.x * 2f);
-
             if ( Vector2.Distance( transform.position, targets[ currentTargetIndex ] ) <= GetComponent<CircleCollider2D>().radius * transform.localScale.x)
             {
                 currentTargetIndex ++;

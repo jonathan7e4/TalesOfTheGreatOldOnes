@@ -18,7 +18,7 @@ public class Flank : AIBehaviour
     public bool lookingAPath = false;
     public bool followingPath;
     // PRIVATE ATTRIBUTES
-    Transform playerTransform;
+    public Transform playerTransform;
     float timeFollowingPathCount;
     Vector2 lastPathNodePos;
 
@@ -150,7 +150,7 @@ public class Flank : AIBehaviour
 
     public void UpdateDistanceToPlayer()
     {
-        if(Time.timeScale != 0)
+        if(Time.timeScale != 0 && playerTransform != null)
             distanceToPlayer = playerTransform.position - transform.position;
     }
 
@@ -159,7 +159,7 @@ public class Flank : AIBehaviour
     {
         UpdateDistanceToPlayer();
 
-        float distanceToPlayer = Vector2.Distance( lastPathNodePos, (Vector2) playerTransform.position );
+        float distanceToPlayer = Vector2.Distance( lastPathNodePos, playerTransform.position);
 
         Vector2 target;
 
@@ -241,6 +241,8 @@ public class Flank : AIBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         seeker = GetComponent<Pathfinding.Seeker>();
+
+        playerTransform = PlayerController.instance.gameObject.transform;
     }
 
 
@@ -248,7 +250,8 @@ public class Flank : AIBehaviour
     {
         playerTransform = FindObjectOfType<PlayerController>().transform;
 
-        FollowPlayerLogicUpdate();
+        if (playerTransform != null)
+            FollowPlayerLogicUpdate();
     }
 
 
@@ -267,6 +270,6 @@ public class Flank : AIBehaviour
 
     void Update()
     {
-        if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.transform;
+        //if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.gameObject.transform;
     }
 }
