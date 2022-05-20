@@ -13,6 +13,8 @@ public class SkeletonAIController : MonoBehaviour
     Rigidbody2D rb;
     Animator animator;
 
+    Transform playerTransform;
+
     Flank flank;
     AIMeleeAttack melee;
 
@@ -23,6 +25,10 @@ public class SkeletonAIController : MonoBehaviour
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        playerTransform = FindObjectOfType<PlayerController>().transform;
+
         melee = GetComponent<AIMeleeAttack>();
         flank = GetComponent<Flank>();
         rb = GetComponent<Rigidbody2D>();
@@ -32,8 +38,67 @@ public class SkeletonAIController : MonoBehaviour
         flank.maxDistToPlayer = melee.attackDistance + GetComponent<CircleCollider2D>().radius * transform.localScale.x;
     }
 
+
+    private void UpdateIdleAnimation()
+    {
+        Vector2 enemyToPlayer = playerTransform.position - transform.position;
+
+        if (Mathf.Abs(enemyToPlayer.x) > Mathf.Abs(enemyToPlayer.y))
+        {
+            if (enemyToPlayer.x > 0) animator.SetFloat("Horizontal", 1);
+            else animator.SetFloat("Horizontal", -1);
+            animator.SetFloat("Vertical", 0);
+        }
+        else
+        {
+            if (enemyToPlayer.y > 0) animator.SetFloat("Vertical", 1);
+            else animator.SetFloat("Vertical", -1);
+            animator.SetFloat("Horizontal", 0);
+        }
+    }
+
+
+    private void UpdateAnimator()
+    {
+        float horizontalVelocity = rb.velocity.x;
+        float verticalVelocity = rb.velocity.y;
+
+        if (horizontalVelocity != 0 || verticalVelocity != 0) animator.SetFloat("Speed", 1);
+        else
+        {
+            animator.SetFloat("Speed", 0);
+            UpdateIdleAnimation();
+        }
+
+        if (horizontalVelocity > 0)
+        {
+            animator.SetFloat("Horizontal", 1);
+            animator.SetFloat("Vertical", 0);
+        }
+        else if (horizontalVelocity < 0)
+        {
+            animator.SetFloat("Horizontal", -1);
+            animator.SetFloat("Vertical", 0);
+        }
+
+        if (verticalVelocity > 2.8)
+        {
+            animator.SetFloat("Horizontal", 0);
+            animator.SetFloat("Vertical", 1);
+        }
+        else if (verticalVelocity < -2.8)
+        {
+            animator.SetFloat("Horizontal", 0);
+            animator.SetFloat("Vertical", -1);
+        }
+    }
+
+
     void Update()
     {
+        if (animator != null) UpdateAnimator();
+        else animator = animatedObject.GetComponent<Animator>();
+
         flank.UpdateDistanceToPlayer();
 
         switch (currentState)

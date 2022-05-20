@@ -136,13 +136,13 @@ public class PlayerController : MonoBehaviour
         }
         else if ( Input.GetKeyUp( KeyCode.LeftShift ) ) keyboardStatus.shift = false;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if ( Input.GetKeyDown( KeyCode.Space ) && StaminaSystem.instance.currentStamina > 0f)
         {
-            animator.SetBool("Attacking", true);
-            StaminaSystem.instance.loseStamina(5f);
+            animator.SetBool( "Attacking", true );
+            StaminaSystem.instance.loseStamina( 20f );
             meleeAttack.Attack();
         }
-        else if (Input.GetKeyUp(KeyCode.Space)) animator.SetBool("Attacking", false);
+        else if ( Input.GetKeyUp( KeyCode.Space ) ) animator.SetBool( "Attacking", false );
     }
 
 
