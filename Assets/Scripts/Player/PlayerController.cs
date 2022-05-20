@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
+    public Vector2Value startingPosition;
+
     public float speed = 4f;
     public enum state { Normal, Running, Dashing }
     public state currentState = state.Normal;
@@ -240,6 +242,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        transform.position = startingPosition.startingPositionOnLoad;
+
         animator = animatedObject.GetComponent<Animator>();
 
         rigidBody2D = GetComponent<Rigidbody2D>();

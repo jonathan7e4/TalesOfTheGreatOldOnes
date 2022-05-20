@@ -445,8 +445,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1073834726}
-  - {fileID: 170065951}
   - {fileID: 771507794}
+  - {fileID: 170065951}
   m_Father: {fileID: 1094445596}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -954,8 +954,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tales of the Great Old Ones
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 840bba72819a4dd42a7e7ee4fc725cae, type: 2}
-  m_sharedMaterial: {fileID: 1673544555109349313, guid: 840bba72819a4dd42a7e7ee4fc725cae, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 66c61cdd515e2d24993bb536c8f442b9, type: 2}
+  m_sharedMaterial: {fileID: -6748723789116114456, guid: 66c61cdd515e2d24993bb536c8f442b9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
