@@ -18,7 +18,10 @@ public class PlayerController : MonoBehaviour
     float acceleration = 200f;
 
     KeyboardStatus keyboardStatus = new KeyboardStatus();
-    Rigidbody2D rigidBody2D;
+    [HideInInspector]
+    public Rigidbody2D rigidBody2D;
+    [HideInInspector]
+    public StatusEffects statusEffects;
     PlayerDash dash;
     MeleeAttack meleeAttack;
     [HideInInspector]
@@ -136,13 +139,13 @@ public class PlayerController : MonoBehaviour
         }
         else if ( Input.GetKeyUp( KeyCode.LeftShift ) ) keyboardStatus.shift = false;
 
-        if ( Input.GetKeyDown( KeyCode.Space ) && StaminaSystem.instance.currentStamina > 0f)
+        if (Input.GetKeyDown(KeyCode.Space) && StaminaSystem.instance.currentStamina > 0f)
         {
-            animator.SetBool( "Attacking", true );
-            StaminaSystem.instance.loseStamina( 20f );
+            animator.SetBool("Attacking", true);
+            StaminaSystem.instance.loseStamina(20f);
             meleeAttack.Attack();
         }
-        else if ( Input.GetKeyUp( KeyCode.Space ) ) animator.SetBool( "Attacking", false );
+        else if (Input.GetKeyUp(KeyCode.Space)) animator.SetBool("Attacking", false);
     }
 
 
@@ -183,6 +186,8 @@ public class PlayerController : MonoBehaviour
 
             StaminaSystem.instance.loseStamina(10f * Time.deltaTime);
 
+            AudioManager.instance.PlayOnLoop("FootstepsGrass", 2);
+
         }
         else currentState = state.Normal;
     }
@@ -196,6 +201,8 @@ public class PlayerController : MonoBehaviour
 
         Vector2 finalSpeed = playerDirection * currentSpeed;
         rigidBody2D.velocity = exhausted? finalSpeed * 0.5f : finalSpeed;
+
+        AudioManager.instance.PlayOnLoop("FootstepsGrass", 1);
     }
 
 
@@ -236,6 +243,7 @@ public class PlayerController : MonoBehaviour
         animator = animatedObject.GetComponent<Animator>();
 
         rigidBody2D = GetComponent<Rigidbody2D>();
+        statusEffects = GetComponent<StatusEffects>();
 
         dash = GetComponent<PlayerDash>();
 
