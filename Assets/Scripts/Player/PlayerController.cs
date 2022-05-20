@@ -255,6 +255,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        transform.position = startingPosition.startingPositionOnLoad;
+
         animator = animatedObject.GetComponent<Animator>();
 
         rigidBody2D = GetComponent<Rigidbody2D>();
