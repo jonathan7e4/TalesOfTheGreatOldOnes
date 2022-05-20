@@ -60,11 +60,13 @@ public class PlayerController : MonoBehaviour
         {
             currentSpeed = Mathf.Min( speed, currentSpeed + acceleration * Time.deltaTime );
             animator.SetFloat( "Speed", 1 );
+            AudioManager.instance.PlayOnLoop("FootstepsGrass", 1.5f);
         }
         else
         {
             currentSpeed = 0f;
             animator.SetFloat( "Speed", 0 );
+            AudioManager.instance.Pause("FootstepsGrass");
         }
     }
 
@@ -170,7 +172,16 @@ public class PlayerController : MonoBehaviour
 
     void DashingUpdate()
     {
-        if ( !dash.dashing ) currentState = keyboardStatus.shift ? state.Running : state.Normal;
+        if (!dash.dashing)
+        {   if (keyboardStatus.shift)
+            {
+                currentState = state.Running;
+            }
+            else
+                currentState = keyboardStatus.shift ? state.Running : state.Normal;
+
+        }
+        
     }
 
 
@@ -185,11 +196,15 @@ public class PlayerController : MonoBehaviour
             rigidBody2D.velocity = playerDirection * currentSpeed * 1.5f;
 
             StaminaSystem.instance.loseStamina(10f * Time.deltaTime);
-
-            AudioManager.instance.PlayOnLoop("FootstepsGrass", 2);
+            AudioManager.instance.PlayOnLoop("FootstepsGrass", 1.8f);
 
         }
-        else currentState = state.Normal;
+        else
+        {
+            AudioManager.instance.Pause("FootstepsGrass");
+            currentState = state.Normal;
+        }
+
     }
 
 
@@ -201,8 +216,6 @@ public class PlayerController : MonoBehaviour
 
         Vector2 finalSpeed = playerDirection * currentSpeed;
         rigidBody2D.velocity = exhausted? finalSpeed * 0.5f : finalSpeed;
-
-        AudioManager.instance.PlayOnLoop("FootstepsGrass", 1);
     }
 
 
@@ -257,5 +270,14 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         CanvasController.instance.EndGame();
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "StonePath")
+        {
+            Debug.Log("qwehu");
+            AudioManager.instance.PlayOnLoop("FootstepsStone", 1);
+        }
     }
 }

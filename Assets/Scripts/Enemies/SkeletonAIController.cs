@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Flank))]
 public class SkeletonAIController : MonoBehaviour
 {
-    enum State { DoingFlank, Attacking }
-    State currentState = State.DoingFlank;
+    enum State { DoingFlank, Attacking, WaitingPlayer }
+    State currentState = State.WaitingPlayer;
 
     public GameObject animatedObject;
 
@@ -142,5 +142,25 @@ public class SkeletonAIController : MonoBehaviour
             flank.StartBehaviour();
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (currentState == State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.DoingFlank;
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (currentState != State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.WaitingPlayer;
+
+            animator.SetFloat("Speed", 0);
+            UpdateIdleAnimation();
+        }
     }
 }

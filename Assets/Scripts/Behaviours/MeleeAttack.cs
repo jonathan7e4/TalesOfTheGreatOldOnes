@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -32,6 +33,7 @@ public class MeleeAttack : MonoBehaviour
         float maxAngle = 45f;
 
         Collider2D[] enemies = Physics2D.OverlapCircleAll(playerPosition, attackDistance, LayerMask.GetMask("Enemy"));
+        enemies = enemies.Where(c => !c.isTrigger).ToArray();
         if (enemies.Length != 0)
         {
             foreach (Collider2D enemy in enemies)
@@ -43,7 +45,6 @@ public class MeleeAttack : MonoBehaviour
 
                 if (angle < maxAngle && angle > -maxAngle)
                 {
-                    //Debug.DrawLine(playerPosition, enemyPosition, Color.red, 1f);
                     enemy.GetComponent<AILifeSystem>().TakeDamage(attack);
 
                     enemy.gameObject.GetComponent<Flank>().StopBehaviour();

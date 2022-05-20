@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 430169754408271248}
   - component: {fileID: 430169754408271262}
   - component: {fileID: -5627102787344189798}
+  - component: {fileID: 1586016595}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
@@ -439,7 +440,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.4}
   serializedVersion: 2
   m_Radius: 0.08
 --- !u!114 &430169754408271250
@@ -488,6 +489,7 @@ MonoBehaviour:
   distanceToPlayer: {x: 0, y: 0}
   lookingAPath: 0
   followingPath: 0
+  playerTransform: {fileID: 0}
 --- !u!114 &430169754408271251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,6 +507,8 @@ MonoBehaviour:
   maximumAnimationTime: 0.9
   projectile: {fileID: 4722853362569874870, guid: 0942f6f8ab63f4644b07144fd5dcd51e, type: 3}
   distanceToPlayer: {x: 0, y: 0}
+  damage: 0
+  effects: []
 --- !u!114 &430169754408271248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,6 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 500
   hp: 0
+  souls: 0
   healthBar: {fileID: 430169753797079249}
 --- !u!114 &430169754408271262
 MonoBehaviour:
@@ -532,10 +537,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5036c6695cba3ca6891383a382327fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 2
   animatedObject: {fileID: 5948350197739168240}
   damage: 25
   reloadTime: 3
   reloadTimeCounter: 0
+  slimeType: 0
 --- !u!114 &-5627102787344189798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +555,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289648e2ccd5a1240847655827549756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  attackDistance: 0
+  thrust: 10
+--- !u!58 &1586016595
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430169754408271256}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10
 --- !u!1 &5948350197739168240
 GameObject:
   m_ObjectHideFlags: 0

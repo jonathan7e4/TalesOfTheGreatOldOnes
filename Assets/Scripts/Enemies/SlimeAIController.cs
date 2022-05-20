@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class SlimeAIController : MonoBehaviour
 {
-    enum State { DoingFlank, Shooting }
-    State currentState = State.DoingFlank;
+    [HideInInspector]
+    public enum State { DoingFlank, Shooting, WaitingPlayer}
+    public State currentState = State.WaitingPlayer;
 
     public GameObject animatedObject;
 
@@ -51,7 +52,6 @@ public class SlimeAIController : MonoBehaviour
                 break;
         }
 
-        flank.StartBehaviour();
     }
 
 
@@ -117,6 +117,25 @@ public class SlimeAIController : MonoBehaviour
                 Shoot();
 
                 break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (currentState == State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.DoingFlank;
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (currentState != State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.WaitingPlayer;
+
+            animator.SetFloat("Speed", 0);
         }
     }
 }

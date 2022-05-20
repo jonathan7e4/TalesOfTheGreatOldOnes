@@ -77,7 +77,7 @@ public class Flank : AIBehaviour
 
     Vector2 GetPositionToAvoidPlayer()
     {
-        float offset = 1f;
+        float offset = 2f;
         float maxOffset = maxDistToPlayer - minDistToPlayer;
 
         Vector2 target;
@@ -102,16 +102,18 @@ public class Flank : AIBehaviour
             while ( cast1 && cast2 )
             {
 
-                cast1 = Physics2D.CircleCast( target, GetComponent<CircleCollider2D>().radius, Vector2.right, LayerMask.GetMask( "Obstacle" ) );
-                cast2 = Physics2D.CircleCast( target2, GetComponent<CircleCollider2D>().radius, Vector2.right, LayerMask.GetMask( "Obstacle" ) );
+                cast1 = Physics2D.OverlapCircle( target, GetComponent<CircleCollider2D>().radius, LayerMask.GetMask( "Obstacle" ) );
+                cast2 = Physics2D.OverlapCircle( target2, GetComponent<CircleCollider2D>().radius, LayerMask.GetMask( "Obstacle" ) );
 
                 if ( it ++ > 180 / 15 ) break;
 
                 aiToTarget = PositionUtils.RotateVector2( aiToTarget, 15f );
+
                 target = (Vector2) transform.position + aiToTarget;
 
                 aiToTarget2 = PositionUtils.RotateVector2( aiToTarget2, -15f );
                 target2 = (Vector2) transform.position + aiToTarget2;
+
             }
 
             var distanceTargetToPlayer = Vector2.Distance( playerTransform.position, target );
@@ -173,6 +175,7 @@ public class Flank : AIBehaviour
         else if ( this.distanceToPlayer.magnitude < minDistToPlayer && !lookingAPath && !followingPath )
         {
             target = GetPositionToAvoidPlayer();
+            Debug.DrawLine(transform.position, target, Color.cyan, 1f);
             StartPath( transform.position, target, OnPathFound );
         }
         else if ( !lookingAPath && !followingPath )
@@ -248,7 +251,7 @@ public class Flank : AIBehaviour
 
     public override void StartBehaviour()
     {
-        playerTransform = FindObjectOfType<PlayerController>().transform;
+        playerTransform = FindObjectOfType<PlayerController>().gameObject.transform;
 
         if (playerTransform != null)
             FollowPlayerLogicUpdate();
@@ -264,12 +267,12 @@ public class Flank : AIBehaviour
 
     public override void UpdateBehaviour()
     {
-        if ( !PositionUtils.AroundPlayer( distanceToPlayer, maxDistToPlayer, minDistToPlayer ) ) FollowPlayerLogicUpdate();
+        FollowPlayerLogicUpdate();
     }
 
 
     void Update()
     {
-        //if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.gameObject.transform;
+        if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.gameObject.transform;
     }
 }

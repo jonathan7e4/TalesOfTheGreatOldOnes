@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 3865074432832715556}
   - component: {fileID: 3865074432832715554}
   - component: {fileID: 3865074432832715555}
+  - component: {fileID: -7135140691370272039}
   m_Layer: 6
   m_Name: Bird
   m_TagString: Untagged
@@ -317,9 +318,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.04, y: 0.2}
   serializedVersion: 2
-  m_Radius: 0.080000006
+  m_Radius: 0.2
 --- !u!50 &3865074432832715559
 Rigidbody2D:
   serializedVersion: 4
@@ -359,6 +360,7 @@ MonoBehaviour:
   distanceToPlayer: {x: 0, y: 0}
   lookingAPath: 0
   followingPath: 0
+  playerTransform: {fileID: 0}
 --- !u!114 &3865074432832715558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +376,7 @@ MonoBehaviour:
   movCount: 2
   speed: 15
   distToLine: 2
+  finished: 0
 --- !u!114 &3865074432832715556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +393,7 @@ MonoBehaviour:
   timeToAttackAgain: 3
   preAttackTime: 0
   waitingTime: 0
+  currentState: 3
   animatedObject: {fileID: 7658911500008481321}
   damage: 40
 --- !u!114 &3865074432832715554
@@ -434,7 +438,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 1000
   hp: 0
+  souls: 0
   healthBar: {fileID: 3865074432251198282}
+--- !u!58 &-7135140691370272039
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3865074432832715562}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10
 --- !u!1 &3865074432953123882
 GameObject:
   m_ObjectHideFlags: 0

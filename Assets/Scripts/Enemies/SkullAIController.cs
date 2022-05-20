@@ -33,7 +33,8 @@ public class SkullAIController : MonoBehaviour
         Waiting,
         Attack,
         FollowingPlayer,
-        Resting
+        Resting,
+        WaitingPlayer
     }
     public State currentState = State.Resting;
 
@@ -199,6 +200,26 @@ public class SkullAIController : MonoBehaviour
 
         if (collision.gameObject.layer == 3 && dash.dashing) {
             InterruptDash();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (currentState == State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.FollowingPlayer;
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (currentState != State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.WaitingPlayer;
+
+            animator.SetFloat("Speed", 0);
+            UpdateIdleAnimation();
         }
     }
 }

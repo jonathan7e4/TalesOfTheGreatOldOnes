@@ -16,9 +16,9 @@ public class BirdAIController : MonoBehaviour
     public float waitingTime;
 
     [HideInInspector]
-    public enum State { DoingFlank, StartingAttack, DoingZicZac }
+    public enum State { DoingFlank, StartingAttack, DoingZicZac, WaitingPlayer}
 
-    public State currentState = State.StartingAttack;
+    public State currentState = State.WaitingPlayer;
 
     public GameObject animatedObject;
 
@@ -47,8 +47,6 @@ public class BirdAIController : MonoBehaviour
         flank.InitBehaviourData();
         zicZac.InitBehaviourData();
 
-
-        flank.StartBehaviour();
     }
 
 
@@ -165,13 +163,13 @@ public class BirdAIController : MonoBehaviour
 
     void Update()
     {
-        if ( animator == null ) animator = animatedObject.GetComponent<Animator>();
+        if (animator == null) animator = animatedObject.GetComponent<Animator>();
 
-        if ( animator != null ) UpdateAnimator();
-        
+        if (animator != null) UpdateAnimator();
+
         flank.UpdateDistanceToPlayer();
 
-        switch ( currentState )
+        switch (currentState)
         {
             case State.DoingFlank:
 
@@ -190,6 +188,26 @@ public class BirdAIController : MonoBehaviour
                 DoZicZac();
 
                 break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (currentState == State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.DoingFlank;
+        }
+            
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (currentState != State.WaitingPlayer && collision.gameObject.tag == "Player")
+        {
+            currentState = State.WaitingPlayer;
+
+            animator.SetFloat("Speed", 0);
+            UpdateIdleAnimation();
         }
     }
 }

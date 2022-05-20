@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
 
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+
         }
     }
 
@@ -38,23 +39,35 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
+    public void SpeedUp(float speed)
+    {
+        Sound s = FindSound(name);
+        s.source.pitch = speed;
+    }
+
+    public void ResetSpeed()
+    {
+        Sound s = FindSound(name);
+        s.source.pitch = s.pitch;
+    }
+
     public void PlayOnLoop(string name, float speed) {
         Sound s = FindSound(name);
+
+        s.source.pitch = speed;
 
         if (!s.source.isPlaying)
         {
             s.source.loop = true;
-            s.source.pitch = speed;
-
             s.source.Play();
         }
     }
 
-    public void Stop(string name)
+    public void Pause(string name)
     {
         Sound s = FindSound(name);
 
-        s.source.Stop();
+        s.source.Pause();
         s.source.pitch = s.pitch;
     }
 
