@@ -53,6 +53,12 @@ TagManager:
   - name: Bridge
     uniqueID: 1291577137
     locked: 0
+  - name: Shadows
+    uniqueID: 259626153
+    locked: 0
+  - name: Miscellaneous
+    uniqueID: 1016143995
+    locked: 0
   - name: UI
     uniqueID: 3238007149
     locked: 0

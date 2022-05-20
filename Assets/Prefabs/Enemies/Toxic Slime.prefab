@@ -63,5 +63,17 @@ PrefabInstance:
       propertyPath: slimeType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1298615575754754865, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
+      propertyPath: m_Color.b
+      value: 0.12756586
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298615575754754865, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298615575754754865, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
