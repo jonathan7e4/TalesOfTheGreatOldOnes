@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!21 &-7820627553061522154
+--- !u!21 &-6748723789116114456
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 1298622692259325769}
+        m_Texture: {fileID: 4107388429345866639}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Name: LilitaOne-Regular SDF
   m_EditorClassIdentifier: 
   hashCode: 1275464279
-  material: {fileID: -7820627553061522154}
+  material: {fileID: -6748723789116114456}
   materialHashCode: -224660969
   m_Version: 1.1.0
   m_SourceFontFileGUID: cadab9c07fe8444129761506daadc571
@@ -1875,7 +1875,7 @@ MonoBehaviour:
     m_GlyphIndex: 218
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: 1298622692259325769}
+  - {fileID: 4107388429345866639}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_ClearDynamicDataOnBuild: 0
@@ -2616,7 +2616,7 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
---- !u!28 &1298622692259325769
+--- !u!28 &4107388429345866639
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
+    public Vector2Value startingPosition;
+
     public float speed = 4f;
     public enum state { Normal, Running, Dashing }
     public state currentState = state.Normal;
@@ -178,7 +180,7 @@ public class PlayerController : MonoBehaviour
                 currentState = state.Running;
             }
             else
-                currentState = keyboardStatus.shift ? state.Running : state.Normal;
+                currentState = state.Normal;
 
         }
         
@@ -270,14 +272,5 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         CanvasController.instance.EndGame();
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "StonePath")
-        {
-            Debug.Log("qwehu");
-            AudioManager.instance.PlayOnLoop("FootstepsStone", 1);
-        }
     }
 }
