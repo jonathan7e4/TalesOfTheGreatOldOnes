@@ -10,9 +10,12 @@ public class Shoot : AIBehaviour
     public float maximumAnimationTime;
     public GameObject projectile;
     public Vector2 distanceToPlayer;
+    [HideInInspector]
+    public float damage;
+    [HideInInspector]
+    public string[] effects;
     // PRIVATE ATTRIBUTES
     Transform playerTransform;
-    float damage;
 
 
     bool CanShotToPlayer()
@@ -50,7 +53,9 @@ public class Shoot : AIBehaviour
 
                 projectile.GetComponent<Rigidbody2D>().velocity = (target - (Vector2)transform.position).normalized * projectileSpeed;
 
-                projectile.GetComponent<ProyectileBehaviour>().damage = damage;
+                ProyectileBehaviour pb =  projectile.GetComponent<ProyectileBehaviour>();
+                pb.damage = damage;
+                pb.effects = effects;
 
                 shootReloadTime = 3f;
                 animationTime = 0f;
@@ -70,8 +75,7 @@ public class Shoot : AIBehaviour
 
 
     public override void InitBehaviourData()
-    {
-        damage = GetComponent<SlimeAIController>().damage;
+    {      
         animationTime = 0f;
     }
 
@@ -90,6 +94,7 @@ public class Shoot : AIBehaviour
 
     public override void UpdateBehaviour()
     {
+
         if (Time.timeScale != 0)
             ShootLogicUpdate();
     }
@@ -98,4 +103,6 @@ public class Shoot : AIBehaviour
     {
         if (playerTransform == null && PlayerController.instance != null) playerTransform = PlayerController.instance.transform;
     }
+
+
 }

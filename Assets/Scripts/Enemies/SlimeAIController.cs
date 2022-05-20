@@ -22,6 +22,9 @@ public class SlimeAIController : MonoBehaviour
     public float reloadTime = 3f;
     public float reloadTimeCounter;
 
+    [HideInInspector]
+    public enum SlimeType{ Normal, Toxic }
+    public SlimeType slimeType;
 
     void Start()
     {
@@ -35,6 +38,18 @@ public class SlimeAIController : MonoBehaviour
         flank.InitBehaviourData();
         shoot.InitBehaviourData();
 
+        shoot.damage = damage;
+
+        switch (slimeType)
+        {
+            case SlimeType.Normal:
+                shoot.effects = new string[0];
+                break;
+            case SlimeType.Toxic:
+                string[] effects = { "Slow", "Toxic" };
+                shoot.effects = effects;
+                break;
+        }
 
         flank.StartBehaviour();
     }

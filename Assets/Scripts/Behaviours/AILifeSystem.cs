@@ -6,6 +6,7 @@ public class AILifeSystem : MonoBehaviour
 {
     public float maxHp = 1000f;
     public float hp;
+    public int souls;
 
     public HealthBar healthBar;
 
@@ -37,5 +38,10 @@ public class AILifeSystem : MonoBehaviour
         hp = Mathf.Min(maxHp, hp + healPower);
         healthBar.SetHealth(hp);
         //Debug.Log("Me curaron");
+    }
+
+    private void OnDestroy()
+    {
+        SoulsController.instance.addSouls(souls);
     }
 }

@@ -76,12 +76,10 @@ public class ZicZac : AIBehaviour
 
         int currentTargetIndex = 0;
 
-        Debug.Log("HELP");
-
         do
         {
             var meToTarget = targets[ currentTargetIndex ] - (Vector2) transform.position;
-            Debug.DrawLine(transform.position, (Vector2)transform.position + meToTarget);
+            //Debug.DrawLine(transform.position, (Vector2)transform.position + meToTarget);
             meToTarget.Normalize();
 
             GetComponent<Rigidbody2D>().velocity = meToTarget * speed;
@@ -103,7 +101,6 @@ public class ZicZac : AIBehaviour
         while ( Vector2.Distance( transform.position, playerPos ) > GetComponent<CircleCollider2D>().radius * transform.localScale.x )
         {
             yield return null;
-            Debug.Log("TO PLAYER");
 
             var meToTarget = playerPos - (Vector2) transform.position;
             //Debug.DrawLine(transform.position, (Vector2)transform.position + meToTarget);

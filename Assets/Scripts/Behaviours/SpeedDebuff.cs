@@ -2,16 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedDebuff : MonoBehaviour
+public static class SpeedDebuff
 {
-    public PlayerController playerController;
+    public static float debuffTime = 3f;
 
-    private void Start()
-    {
-        SlowPlayer();
-    }
-
-    public void SlowPlayer() {
-        playerController.speed /= 2;
-    }
+    
 }

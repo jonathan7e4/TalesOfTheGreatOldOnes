@@ -50,8 +50,11 @@ public class MeleeAttack : MonoBehaviour
                     enemy.gameObject.GetComponent<SkullAIController>().InterruptDash();
                 }
 
-                Rigidbody2D enemyRb = enemy.GetComponent<Rigidbody2D>();
-                StartCoroutine(knockback(enemyRb));
+                if (enemy.gameObject.activeInHierarchy)
+                {
+                    Rigidbody2D enemyRb = enemy.GetComponent<Rigidbody2D>();
+                    StartCoroutine(knockback(enemyRb));
+                }
             }
         }
     }

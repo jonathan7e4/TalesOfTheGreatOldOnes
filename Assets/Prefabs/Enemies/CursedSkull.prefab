@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 6440503808910763145}
   m_Layer: 6
   m_Name: CursedSkull
-  m_TagString: Untagged
+  m_TagString: Teleport
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,6 +311,7 @@ MonoBehaviour:
   distanceToPlayer: {x: 0, y: 0}
   lookingAPath: 0
   followingPath: 0
+  playerTransform: {fileID: 0}
 --- !u!114 &6440503808910763143
 MonoBehaviour:
   m_ObjectHideFlags: 0
