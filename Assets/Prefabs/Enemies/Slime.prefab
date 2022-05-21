@@ -523,7 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 500
   hp: 0
-  souls: 0
+  souls: 30
   healthBar: {fileID: 430169753797079249}
 --- !u!114 &430169754408271262
 MonoBehaviour:

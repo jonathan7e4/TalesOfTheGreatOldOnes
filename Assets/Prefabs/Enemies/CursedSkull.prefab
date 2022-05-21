@@ -353,9 +353,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3bd13e0a6f8534eb4d5e43aeac8b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1000
+  maxHp: 500
   hp: 0
-  souls: 0
+  souls: 90
   healthBar: {fileID: 6440503809701027964}
 --- !u!114 &6440503808910763145
 MonoBehaviour:

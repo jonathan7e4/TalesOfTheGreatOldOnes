@@ -66,6 +66,12 @@ public class CanvasController : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene( SceneManager.GetActiveScene().buildIndex );
+    }
+
+
     public void QuitGame()
     {
         Application.Quit();

@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 1000
   hp: 0
-  souls: 0
+  souls: 15
   healthBar: {fileID: 4320767253411971178}
 --- !u!58 &749638326
 CircleCollider2D:

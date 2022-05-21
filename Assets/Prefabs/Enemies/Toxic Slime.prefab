@@ -7,6 +7,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1586016595, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
+      propertyPath: m_Radius
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 430169754408271248, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
+      propertyPath: maxHp
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 430169754408271248, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
+      propertyPath: souls
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 430169754408271251, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 1882580634084783857, guid: 5b6bd52c8208b0440b3a1fd145d1e249, type: 3}
     - target: {fileID: 430169754408271256, guid: 8875e4326542d1e4fb52bdbaffb2b883, type: 3}
       propertyPath: m_Name
       value: Toxic Slime

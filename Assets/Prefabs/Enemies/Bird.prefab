@@ -392,7 +392,7 @@ MonoBehaviour:
   timeCounterPostAttack: 0
   timeToAttackAgain: 3
   preAttackTime: 0
-  waitingTime: 0
+  waitingTime: 1
   currentState: 3
   animatedObject: {fileID: 7658911500008481321}
   damage: 40
@@ -436,9 +436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3bd13e0a6f8534eb4d5e43aeac8b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1000
+  maxHp: 250
   hp: 0
-  souls: 0
+  souls: 20
   healthBar: {fileID: 3865074432251198282}
 --- !u!58 &-7135140691370272039
 CircleCollider2D:
