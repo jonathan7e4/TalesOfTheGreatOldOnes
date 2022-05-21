@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 4320767253064022277}
   - component: {fileID: 4320767253064022283}
   - component: {fileID: 4320767253064022282}
+  - component: {fileID: 749638326}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -255,7 +256,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 1000
   hp: 0
+  souls: 0
   healthBar: {fileID: 4320767253411971178}
+--- !u!58 &749638326
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320767253064022300}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10
 --- !u!1 &4320767253306536332
 GameObject:
   m_ObjectHideFlags: 0

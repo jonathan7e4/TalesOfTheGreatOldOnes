@@ -8,8 +8,17 @@ public class CanvasController : MonoBehaviour
     public static CanvasController instance;
     public GameObject gameOverPanel;
     public GameObject pausePanel;
+    public Vector2 playerStartingPosition;
+    public Vector2Value storedPlayerPosition;
 
     public bool gameEnded;
+
+
+    private void Awake()
+    {
+        Time.timeScale = 1;
+    }
+
 
     void Start()
     {
@@ -34,7 +43,8 @@ public class CanvasController : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Alpha 1");
+        storedPlayerPosition.startingPositionOnLoad = playerStartingPosition;
+        SceneManager.LoadScene("Alpha");
         Time.timeScale = 1;
     }
 

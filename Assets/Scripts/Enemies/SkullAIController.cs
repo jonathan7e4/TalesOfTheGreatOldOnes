@@ -36,7 +36,7 @@ public class SkullAIController : MonoBehaviour
         Resting,
         WaitingPlayer
     }
-    public State currentState = State.Resting;
+    public State currentState = State.WaitingPlayer;
 
 
     void Start()
@@ -54,6 +54,8 @@ public class SkullAIController : MonoBehaviour
 
         attackCooldownTimer = 0f;
         consecutiveAttacksCounter = consecutiveAttacks;
+
+        currentState = State.WaitingPlayer;
     }
 
 

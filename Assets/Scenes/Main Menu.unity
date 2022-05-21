@@ -756,6 +756,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 0}
   pausePanel: {fileID: 0}
+  playerStartingPosition: {x: -13, y: 15}
+  storedPlayerPosition: {fileID: 11400000, guid: 4f3627388e205b04ab1a89626ab96dd2, type: 2}
   gameEnded: 0
 --- !u!1001 &1652454004
 PrefabInstance:
